@@ -1,6 +1,8 @@
 window.addEventListener("load",function() {
 
-    var Q = Quintus({ imagePath: "assets/"})
+    var Q = Quintus({ imagePath: "assets/",
+                      audioPath: "assets/music/",
+                      audioSupported: ["mp3"] })
         .include("Sprites, Scenes, Input, 2D, Anim, Touch, UI, Audio")
         .setup({ maximize: true })
         .enableSound()
@@ -23,7 +25,7 @@ window.addEventListener("load",function() {
             var p = this.entity.p;
 
             if(!p.stepDistance) { p.stepDistance = 32; }
-            if(!p.stepDelay) { p.stepDelay = 0.2; }
+            if(!p.stepDelay) { p.stepDelay = 0.1; }
 
             p.stepWait = 0;
             this.entity.on("step",this,"step");
@@ -96,9 +98,9 @@ window.addEventListener("load",function() {
         }
     });
 
-    Q.Sprite.extend("Car",{ //Create car sprite
-        init: function(c) {
-            this._super(c, {
+    Q.Sprite.extend("Player",{ //Create car sprite
+        init: function(p) {
+            this._super(p, {
                 asset: "car.png",
                 x: 410,
                 y: 90
@@ -107,12 +109,26 @@ window.addEventListener("load",function() {
         }
     });
 
+    Q.Sprite.extend("Dummy", {
+        init: function(d) {
+            this._super(d, {
+                asset: "car.png",
+                x: 450,
+                y: 120
+            });
+            this.add('2d');
+        }
+    });
+
     Q.scene("level1", function(stage) {
-        var car = stage.insert(new Q.Car());
+        var car = stage.insert(new Q.Player());
+        var dummy = stage.insert(new Q.Dummy());
+        console.log("Loading musica")
+        Q.audio.play('LevelTheme1.mp3', {loop: true});
         stage.add("viewport").follow(car);
     });
 
-    Q.load("car.png", function() {
+    Q.load(["car.png", "LevelTheme1.mp3"], function() {
         Q.stageScene("level1");
     });
 });
