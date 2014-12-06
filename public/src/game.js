@@ -4,12 +4,10 @@ window.addEventListener("load",function() {
         .include("Sprites, Scenes, Input, 2D, Anim, Touch, UI")
         .setup({ maximize: true })
         .controls(true).touch();
-
         Q.gravityY = 0;
         Q.gravityX = 0;
 
     Q.Sprite.extend("Car",{ //Create car sprite
-
         init: function(c) {
 
             this._super(c, {
