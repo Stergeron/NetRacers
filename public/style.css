@@ -10,3 +10,9 @@
   background-color: #5eec3a;
   color: #FFFFFF;
 }
+
+body {
+    padding: 0px;
+    margin: 0px;
+    background-color: black;
+}
