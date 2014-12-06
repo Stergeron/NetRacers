@@ -1,8 +1,7 @@
 var Q = Quintus()
     .include("Sprites, Scenes, Input, 2D, Anim, Touch, UI")
     .setup({ maximize: true })
-    .controls().touch()
-    ;
+    .controls().touch();
 
 Q.Sprite.extend("Car",{ //Create car sprite
 
