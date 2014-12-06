@@ -1,8 +1,9 @@
 window.addEventListener("load",function() {
 
     var Q = Quintus({ imagePath: "assets/"})
-        .include("Sprites, Scenes, Input, 2D, Anim, Touch, UI")
+        .include("Sprites, Scenes, Input, 2D, Anim, Touch, UI, Audio")
         .setup({ maximize: true })
+        .enableSound()
         .controls(true).touch();
 
         Q.gravityY = 0;
