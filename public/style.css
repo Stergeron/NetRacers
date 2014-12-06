@@ -1,12 +1,28 @@
-.key {
-  border-radius: 10px;
-  border: 1px solid black;
-  padding: 20px;
-  width: 100px;
-  margin: 20px;
+.lobby {
+  background-color: #414141;
+  font-family: Arial;
+  font-weight: Bold;
+  font-style: oblique;
+  width: 25%;
+  padding: 10px;
+  cursor: pointer;
 }
 
-.pressed {
-  background-color: #5eec3a;
+.h {
+  font-size: 20px;
   color: #FFFFFF;
+}
+
+.u {
+  color: #FFFFFF;
+  font-size: 14px;
+  margin-top: 5px;
+  display: inline-block;
+}
+
+.join {
+  display: inline-block;
+  width: 100%;
+  text-align: right;
+  color: #eae9e9;
 }

@@ -1,23 +1,24 @@
-<html>
+<html ng-app="matchmaking">
     <head>
-      <script src="socket.io/socket.io.js"></script>
       <link href="style.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-      <div id="stuffs">
-        <div id="1" class="key">
-          max
+      <div id="menu" ng-controller="Player as player">
+        <div id="lobbies" ng-show="player.l.view == 'lobbies'">
+          <div class="lobby" ng-repeat="lobby in player.l.lobbies" ng-show="lobby.open" ng-click="player.joinLobby(lobby.name)">
+            <div class="h">{{lobby.name}}</div>
+            <div class="u">{{lobby.members.length}} / 4</div>
+            <div class="join">join</div>
+          </div>
         </div>
-        <div id="2" class="key">
-          will
-        </div>
-        <div id="3" class="key">
-          nick
-        </div>
-        <div id="4" class="key">
-          dianne
+        <div id="lobby">
+          <div class="lobby" ng-repeat="person in player.l.currentLobby.members">
+            <div class="u">{{person}}</div>
+          </div>
         </div>
       </div>
+      <script src="socket.io/socket.io.js"></script>
+      <script src="lib/angular.min.js"></script>
       <script src="src/testing.js"></script>
     </body>
 </html>
