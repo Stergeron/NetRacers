@@ -20,19 +20,15 @@ window.addEventListener("load",function() {
             this._super(c, {
                 asset: "car.png",
                 x: 410,
-                y: 90
+                y: 90,
+
             });
-            this.add('2d, stepControls');
+            this.add('2d, carControls');
         },
-        step: function(){
-          if(Q.inputs.left) {
-           console.log("yo dats dank");
-          }
-          else if(Q.inputs.fire){
-            console.log("butts");
-          }
-        }
+
     });
+
+    var player = new Q.Car();
 
     Q.scene("level1", function(stage) {
         var car = stage.insert(new Q.Car());
