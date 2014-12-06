@@ -2,8 +2,9 @@ window.addEventListener("load",function() {
 
     var Q = Quintus({ imagePath: "assets/",
                       audioPath: "assets/music/",
+                      dataPath: "assets/maps/",
                       audioSupported: ["mp3"] })
-        .include("Sprites, Scenes, Input, 2D, Anim, Touch, UI, Audio")
+        .include("Sprites, Scenes, Input, 2D, Anim, Touch, UI, Audio, TMX")
         .setup({ maximize: true })
         .enableSound()
         .controls(true).touch();
@@ -125,10 +126,11 @@ window.addEventListener("load",function() {
         var dummy = stage.insert(new Q.Dummy());
         console.log("Loading musica")
         Q.audio.play('LevelTheme1.mp3', {loop: true});
+        Q.stageTMX("TinyCircle.tmx", stage)
         stage.add("viewport").follow(car);
     });
 
-    Q.load(["car.png", "LevelTheme1.mp3"], function() {
+    Q.loadTMX(["car.png", "TinyCircle.tmx", "LevelTheme1.mp3"], function() {
         Q.stageScene("level1");
     });
 });
