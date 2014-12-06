@@ -13,7 +13,7 @@ window.addEventListener("load",function() {
         init: function(c) {
 
             this._super(c, {
-                asset: "car",
+                asset: "car.png",
                 x: 410,
                 y: 90
             });
@@ -26,6 +26,6 @@ window.addEventListener("load",function() {
     });
 
     Q.load("car.png", function() {
-        Q.stageScene("level1")
+        Q.stageScene("level1");
     });
 });
