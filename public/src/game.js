@@ -3,7 +3,7 @@ window.addEventListener("load",function() {
     var Q = Quintus({ imagePath: "assets/"})
         .include("Sprites, Scenes, Input, 2D, Anim, Touch, UI")
         .setup({ maximize: true })
-        .controls().touch();
+        .controls(true).touch();
 
         Q.gravityY = 0;
         Q.gravityX = 0;
@@ -17,7 +17,7 @@ window.addEventListener("load",function() {
                 x: 410,
                 y: 90
             });
-            this.add('2d, platformerControls');
+            this.add('2d, stepControls');
         }
     });
 
