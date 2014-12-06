@@ -98,9 +98,9 @@ window.addEventListener("load",function() {
         }
     });
 
-    Q.Sprite.extend("Car",{ //Create car sprite
-        init: function(c) {
-            this._super(c, {
+    Q.Sprite.extend("Player",{ //Create car sprite
+        init: function(p) {
+            this._super(p, {
                 asset: "car.png",
                 x: 410,
                 y: 90
@@ -109,8 +109,20 @@ window.addEventListener("load",function() {
         }
     });
 
+    Q.Sprite.extend("Dummy", {
+        init: function(d) {
+            this._super(d, {
+                asset: "car.png",
+                x: 450,
+                y: 120
+            });
+            this.add('2d');
+        }
+    });
+
     Q.scene("level1", function(stage) {
-        var car = stage.insert(new Q.Car());
+        var car = stage.insert(new Q.Player());
+        var dummy = stage.insert(new Q.Dummy());
         console.log("Loading musica")
         Q.audio.play('LevelTheme1.mp3', {loop: true});
         stage.add("viewport").follow(car);
