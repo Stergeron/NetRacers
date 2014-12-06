@@ -17,6 +17,7 @@ window.addEventListener("load",function() {
                 x: 410,
                 y: 90
             });
+            this.add('2d, platformerControls');
         }
     });
 
