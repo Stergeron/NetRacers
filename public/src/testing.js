@@ -1,4 +1,4 @@
-var socket = io.connect('http://localhost:8888/');
+/*var socket = io();
 
 var ppl = {
   1: {
@@ -15,8 +15,27 @@ var ppl = {
   }
 };
 
+var myPerson = prompt("id?");
+
 window.addEventListener('keydown', function (e) {
-  if(e.keycode == 71){
-    alert("yo yo");
+  if(e.keyCode == 71){
+    socket.emit("down", myPerson);
   }
 }, false);
+
+window.addEventListener('keyup', function (e) {
+  if(e.keyCode == 71){
+    socket.emit("up", myPerson);
+  }
+}, false);
+
+socket.on("clientdown", function(id){
+  ppl[id].key = true;
+  document.getElementById(id).className = "key pressed";
+});
+
+socket.on("clientup", function(id){
+  ppl[id].key = false;
+  document.getElementById(id).className = "key";
+});
+*/

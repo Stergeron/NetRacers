@@ -1,24 +1,20 @@
 var express = require('express');
 var app = express();
-var io = require('socket.io').listen(server);
 
-io.sockets.on("connection", function(socket){
+app.use(express.static(__dirname + '/public'));
 
-});
 
-app.configure(function() {
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(express.static(__dirname + '/public'));
-  app.use(app.router);
-});
-app.configure('development', function() {
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-});
-
-app.configure('production', function() {
-  app.use(express.errorHandler());
-});
 var port = process.env.PORT || 8888;
 
 var server = app.listen(port);
+
+var io = require('socket.io')(server);
+
+io.on('connection', function(socket){
+  socket.on("down", function(id){
+    io.emit("clientdown", id);
+  });
+  socket.on("up", function(id){
+    io.emit("clientup", id);
+  });
+});
