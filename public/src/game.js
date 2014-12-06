@@ -8,10 +8,16 @@ window.addEventListener("load",function() {
         Q.gravityY = 0;
         Q.gravityX = 0;
 
+      Q.input.touchControls({
+        controls:  [ ['left','<' ],
+        ['right','>' ],
+        ["up", "^"],
+        ["down", "V"],
+        ['fire', 'O' ]]
+      });
+
     Q.Sprite.extend("Car",{ //Create car sprite
-
         init: function(c) {
-
             this._super(c, {
                 asset: "car.png",
                 x: 410,
