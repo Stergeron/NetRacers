@@ -7,17 +7,14 @@ window.addEventListener("load",function() {
         Q.gravityY = 0;
         Q.gravityX = 0;
 
-<<<<<<< HEAD
-=======
       Q.input.touchControls({
         controls:  [ ['left','<' ],
         ['right','>' ],
         ["up", "^"],
         ["down", "V"],
-        ['fire', 'O' ]]
+        ['fire', 'O' ] ]
       });
 
->>>>>>> master
     Q.Sprite.extend("Car",{ //Create car sprite
         init: function(c) {
             this._super(c, {
@@ -28,7 +25,12 @@ window.addEventListener("load",function() {
             this.add('2d, stepControls');
         },
         step: function(){
-
+          if(Q.inputs.left) {
+           console.log("yo dats dank");
+          }
+          else if(Q.inputs.fire){
+            console.log("butts");
+          }
         }
     });
 
