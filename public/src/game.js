@@ -9,13 +9,15 @@ window.addEventListener("load",function() {
 
     Q.Sprite.extend("Car",{ //Create car sprite
         init: function(c) {
-
             this._super(c, {
                 asset: "car.png",
                 x: 410,
                 y: 90
             });
             this.add('2d, stepControls');
+        },
+        step: function(){
+
         }
     });
 
