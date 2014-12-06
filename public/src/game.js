@@ -1,6 +1,8 @@
 window.addEventListener("load",function() {
 
-    var Q = Quintus({ imagePath: "assets/"})
+    var Q = Quintus({ imagePath: "assets/",
+                      audioPath: "assets/music/",
+                      audioSupported: ["mp3"] })
         .include("Sprites, Scenes, Input, 2D, Anim, Touch, UI, Audio")
         .setup({ maximize: true })
         .enableSound()
@@ -109,10 +111,12 @@ window.addEventListener("load",function() {
 
     Q.scene("level1", function(stage) {
         var car = stage.insert(new Q.Car());
+        console.log("Loading musica")
+        Q.audio.play('LevelTheme1.mp3', {loop: true});
         stage.add("viewport").follow(car);
     });
 
-    Q.load("car.png", function() {
+    Q.load(["car.png", "LevelTheme1.mp3"], function() {
         Q.stageScene("level1");
     });
 });
