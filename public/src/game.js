@@ -25,7 +25,7 @@ window.addEventListener("load",function() {
             var p = this.entity.p;
 
             if(!p.stepDistance) { p.stepDistance = 32; }
-            if(!p.stepDelay) { p.stepDelay = 0.2; }
+            if(!p.stepDelay) { p.stepDelay = 0.1; }
 
             p.stepWait = 0;
             this.entity.on("step",this,"step");
