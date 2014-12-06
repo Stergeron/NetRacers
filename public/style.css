@@ -5,3 +5,8 @@
   width: 100px;
   margin: 20px;
 }
+
+.pressed {
+  background-color: #5eec3a;
+  color: #FFFFFF;
+}
