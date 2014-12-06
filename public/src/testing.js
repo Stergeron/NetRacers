@@ -1,4 +1,4 @@
-/*var socket = io();
+var socket = io();
 
 var ppl = {
   1: {
@@ -38,4 +38,3 @@ socket.on("clientup", function(id){
   ppl[id].key = false;
   document.getElementById(id).className = "key";
 });
-*/

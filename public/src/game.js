@@ -5,7 +5,6 @@ window.addEventListener("load",function() {
         .setup({ maximize: true })
         .enableSound()
         .controls(true).touch();
-
         Q.gravityY = 0;
         Q.gravityX = 0;
 
@@ -14,7 +13,7 @@ window.addEventListener("load",function() {
         ['right','>' ],
         ["up", "^"],
         ["down", "V"],
-        ['fire', 'O' ]]
+        ['fire', 'O' ] ]
       });
 
     Q.Sprite.extend("Car",{ //Create car sprite
@@ -22,11 +21,15 @@ window.addEventListener("load",function() {
             this._super(c, {
                 asset: "car.png",
                 x: 410,
-                y: 90
+                y: 90,
+
             });
-            this.add('2d, stepControls');
-        }
+            this.add('2d, carControls');
+        },
+
     });
+
+    var player = new Q.Car();
 
     Q.scene("level1", function(stage) {
         var car = stage.insert(new Q.Car());
