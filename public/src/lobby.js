@@ -80,6 +80,7 @@
       if(l.currentLobby.name == name){
         l.view = "match";
         startMatch([l.playerName, l.currentLobby.name]);
+        socket.emit("leaveLobby", {name: l.currentLobby.name, player: l.playerName});
       }
     });
     g.init();

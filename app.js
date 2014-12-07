@@ -22,7 +22,7 @@ io.on('connection', function(socket) {
   try {
     var player = {};
     socket.on("joinGame", function(nm, cb) {
-      if (findForIndex(players, "name", player.name) === undefined && rejectednames.indexOf(nm) < 0 && nm.length < 18) {
+      if (findForIndex(players, "name", nm) === undefined && rejectednames.indexOf(nm) < 0 && nm.length < 18) {
         cb(nm);
         player.name = nm;
         player.id = socket.id;
@@ -79,7 +79,7 @@ io.on('connection', function(socket) {
       io.emit("packet", dat);
     });
     socket.on('disconnect', function() {
-      if (player.lobby !== undefined && findBy(lobbies, "name", player.lobby).open) {
+      if (player.lobby !== undefined) {
         leaveLobby({
           name: player.lobby,
           player: player.name
