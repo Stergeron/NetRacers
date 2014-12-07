@@ -85,7 +85,9 @@ io.on('connection', function(socket) {
           player: player.name
         });
       }
-      if (player.lobby === undefined && player.name ===)
+      if (player.name !== undefined){
+        players.splice(findForIndex(players, "name", player.name), 1);
+      }
     });
   } catch (err) {
     console.log(err);
@@ -96,16 +98,12 @@ var match = io
 .of('/match')
 .on('connection', function (socket) {
   var player = {};
-  socket.on("authenticate", function(auth, fn){
-    if(findForIndex(players, "name", auth.player) !== undefined){
+  socket.on("authenticate", function(auth, fn){{
+      var cMatch = findBy(matches, "name", auth.match);
       fn("yes");
-      var matchName = lobbies[auth.lob].name;
-      if(findForIndex(findBy(matches, "name", matchName).members, "player", auth.player) == findBy(matches, "name", matchName).members.length-1){
-        match.emit("begin", {name: matchName});
+      if(cMatch.members.indexOf(auth.player) == cMatch.members.length-1){
+        match.emit("begin", {name: auth.match});
       }
-    }
-    else {
-      fn("no");
     }
   });
 });
@@ -116,21 +114,11 @@ setInterval(function(){
       startGame(lobbies[i].name);
       lobbies[i].countdown--;
     }
+    else if(lobbies[i].countdown < 0);
     else {
       lobbies[i].countdown--;
       if(lobbies[i].countdown > 0){
         io.emit("updateLobby", lobbies[i]);
-      }
-      else if(lobbies[i].countdown < 0){
-        if(lobbies[i].countdown == -200){
-          io.emit("removeLobby", lobbies[i].name);
-          for(var x=0; x<lobbies[i].members.length; x++){
-            if(findBy(players, "name", lobbies[i].members[x]).lobby == lobbies[i].name){
-              players.splice(players.indexOf(lobbies[i].members[x].name), 1);
-            }
-          }
-          lobbies.splice(i, 1);
-        }
       }
     }
   }

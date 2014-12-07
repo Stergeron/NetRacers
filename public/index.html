@@ -58,6 +58,8 @@
             < leave
           </div>
         </div>
+        <div id="match" ng-show="player.l.view == 'match'">
+        </div>
         <div id="credits" ng-show="player.l.view == 'credits'">
           <div class="linkContainer">
             <a href="#" ng-click="player.main()">Credits</a>
@@ -86,5 +88,7 @@
       <script src="socket.io/socket.io.js"></script>
       <script src="lib/angular.min.js"></script>
       <script src="src/lobby.js"></script>
+      <script src="lib/quintus-all.js"></script>
+      <script src="src/game.js"></script>
     </body>
 </html>

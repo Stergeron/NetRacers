@@ -1,4 +1,4 @@
-window.addEventListener("load",function() {
+var startMatch = function(url){
 
     var Q = Quintus({ imagePath: "assets/images/",
                       audioPath: "assets/music/",
@@ -120,12 +120,14 @@ window.addEventListener("load",function() {
     });
 
     Q.scene("level1", function(stage) {
-        if(window.location.hash !== undefined){
-        var url = window.location.hash.split("#")[1].split("&");
         var socket = io.connect("/match");
-        socket.emit("authenticate", {player: url[0], lob: url[1]}, function(accept){
+        socket.emit("authenticate", {player: url[0], match: url[1]}, function(accept){
           if(accept == "yes"){
-            console.log("accepted");
+            console.log("waiting");
+          }
+        });
+        socket.on("begin", function(match){
+          if(url[1] == match.name){
             Q.audio.play('LevelTheme1.mp3', {loop: true});
             Q.stageTMX("TinyCircle.tmx", stage);
             var car = stage.insert(new Q.Player());
@@ -134,10 +136,9 @@ window.addEventListener("load",function() {
             stage.viewport.scale = 12;
           }
         });
-      }
     });
 
     Q.loadTMX(["car.png", "TinyCircle.tmx", "LevelTheme1.mp3"], function() {
         Q.stageScene("level1");
     });
-});
+};

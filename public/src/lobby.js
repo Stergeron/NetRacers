@@ -78,8 +78,8 @@
     });
     socket.on("startGame", function(name){
       if(l.currentLobby.name == name){
-        console.log("/match.html#" + l.playerName + "&" + l.lobbies.indexOf(l.currentLobby));
-        window.location = "/match.html#" + l.playerName + "&" + l.lobbies.indexOf(l.currentLobby);
+        l.view = "match";
+        startMatch([l.playerName, l.currentLobby.name]);
       }
     });
     g.init();
