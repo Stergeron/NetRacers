@@ -102,8 +102,10 @@ window.addEventListener("load",function() {
     Q.Sprite.extend("Player",{ //Create car sprite
         init: function(p) {
             this._super(p, {
-                asset: "car.png",
+                sheet: "car",
+                sprite: "car",
                 scale: .2,
+                collisionMask: Q.SPRITE_DEFAULT | Q.SPRITE_ACTIVE,
             });
             this.add('2d, carControls');
         }
