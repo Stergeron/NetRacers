@@ -9,10 +9,10 @@ window.addEventListener("load",function() {
         .enableSound()
         .controls(true).touch();
 
-        Q.gravityY = 0;
-        Q.gravityX = 0;
+    Q.gravityY = 0;
+    Q.gravityX = 0;
 
-      Q.input.touchControls({
+    Q.input.touchControls({
         controls:  [ ['left','<' ],
         ['right','>' ],
         ["up", "^"],
