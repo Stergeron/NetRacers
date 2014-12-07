@@ -25,8 +25,8 @@ window.addEventListener("load",function() {
         added: function() {
             var p = this.entity.p;
 
-            if(!p.stepDistance) { p.stepDistance = 32; }
-            if(!p.stepDelay) { p.stepDelay = 0.1; }
+            if(!p.stepDistance) { p.stepDistance = 16; }
+            if(!p.stepDelay) { p.stepDelay = .2; }
 
             p.stepWait = 0;
             this.entity.on("step",this,"step");
@@ -103,6 +103,7 @@ window.addEventListener("load",function() {
         init: function(p) {
             this._super(p, {
                 asset: "car.png",
+                scale: .2
             });
             this.add('2d, carControls');
         }
@@ -112,17 +113,19 @@ window.addEventListener("load",function() {
         init: function(d) {
             this._super(d, {
                 asset: "car.png",
+                scale: .2
             });
             this.add('2d');
         }
     });
 
     Q.scene("level1", function(stage) {
-        var car = stage.insert(new Q.Player());
-        var dummy = stage.insert(new Q.Dummy());
         Q.audio.play('LevelTheme1.mp3', {loop: true});
         Q.stageTMX("TinyCircle.tmx", stage)
+        var car = stage.insert(new Q.Player());
+        var dummy = stage.insert(new Q.Dummy());
         stage.add("viewport").follow(car);
+        stage.viewport.scale = 12;
     });
 
     Q.loadTMX(["car.png", "TinyCircle.tmx", "LevelTheme1.mp3"], function() {
