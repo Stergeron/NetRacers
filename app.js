@@ -144,7 +144,7 @@ var startGame = function(name){
   findBy(lobbies, "name", name).open = false;
   matches.push({name: name, members: findBy(lobbies, "name", name).members});
   var match = matches[matches.length-1].members;
-  for(var i=0; i<match.length; i++){
+  for(var i=0; match.length; i++){
     match[i] = {player: match[i], loaded: false};
   }
   findBy(lobbies, "name", name).countdown = -1;

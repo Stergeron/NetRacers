@@ -78,7 +78,9 @@
     });
     socket.on("startGame", function(name){
       if(l.currentLobby.name == name){
-        window.location = "/match.html#" + l.playerName + "&" + l.lobbies.indexOf(l.currentLobby);
+        console.log("/match.html#" + l.playerName + "&" + l.lobbies.indexOf(l.currentLobby));
+        //window.location = "/match.html#" + l.playerName + "&" + l.lobbies.indexOf(l.currentLobby);
+        window.location = "/match.html";
       }
     });
     g.init();
