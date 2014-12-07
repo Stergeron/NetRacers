@@ -122,16 +122,12 @@ window.addEventListener("load",function() {
 
     Q.scene("level1", function(stage) {
         Q.audio.play('LevelTheme1.mp3', {loop: true});
-        Q.stageTMX("TinyCircle2.tmx", stage)
-        //var car = stage.insert(new Q.Player());
-        //var dummy = stage.insert(new Q.Dummy());
+        Q.stageTMX("TinyCircle.tmx", stage)
         stage.add("viewport").follow(Q("Player").first());
         stage.viewport.scale = 8;
     });
 
-    Q.debug = true;
-
-    Q.loadTMX(["car.png", "car.json", "TinyCircle2.tmx", "LevelTheme1.mp3"], function() {
+    Q.loadTMX(["car.png", "car.json", "TinyCircle.tmx", "LevelTheme1.mp3"], function() {
         Q.compileSheets("car.png","car.json");
         Q.stageScene("level1");
     });
