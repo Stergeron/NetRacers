@@ -18,6 +18,12 @@ div.linkContainer
   padding:10px;
 }
 
+.text {
+  color: #FFFFFF;
+  font-family: Arial;
+  text-align: center;
+}
+
 img {
   display: block;
   margin-left: auto;
@@ -30,6 +36,8 @@ img {
   font-weight: Bold;
   font-style: oblique;
   width: 25%;
+  margin-left: auto;
+  margin-right: auto;
   padding: 10px;
   cursor: pointer;
 }
@@ -60,6 +68,8 @@ input {
 
 #signin {
   width: 20%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .button {
@@ -74,13 +84,17 @@ input {
 
 #lobby {
   width: 50%;
+  margin-left: auto;
+  margin-right: auto;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   ms-user-select: none;
 }
 
-#map {
+.center {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .fifty {
