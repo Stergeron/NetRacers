@@ -143,7 +143,6 @@ var startMatch = function(url) {
     });
     Q.stageTMX("TinyCircle.tmx", stage);
     var car = stage.insert(new Q.Player());
-    var dummy = stage.insert(new Q.Dummy());
     stage.add("viewport").follow(car);
     stage.viewport.scale = 4;
   });
