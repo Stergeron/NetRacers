@@ -104,7 +104,6 @@ window.addEventListener("load",function() {
             this._super(p, {
                 asset: "car.png",
                 scale: .2,
-                collisionMask: Q.SPRITE_FRIENDLY
             });
             this.add('2d, carControls');
         }
@@ -127,8 +126,10 @@ window.addEventListener("load",function() {
         //var car = stage.insert(new Q.Player());
         //var dummy = stage.insert(new Q.Dummy());
         stage.add("viewport").follow(Q("Player").first());
-        stage.viewport.scale = 8;
+        stage.viewport.scale = 1;
     });
+
+    Q.debug = true;
 
     Q.loadTMX(["car.png", "car.json", "TinyCircle2.tmx", "LevelTheme1.mp3"], function() {
         Q.compileSheets("car.png","car.json");
