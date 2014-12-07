@@ -39,7 +39,7 @@
           </div>
           <div class="right">
             <div id="map">
-              Map: <div class="button fifty inline" ng-click="player.changeMap()">{{player.l.maps[player.l.currentLobby.map]}}</div>
+              <div class="button fifty inline" ng-click="player.changeMap()">Map: {{player.l.maps[player.l.currentLobby.map]}}</div>
             </div>
             <div id="countdown" class="button hunna" ng-show="player.l.currentLobby.members.indexOf(player.l.playerName) > 0">Starting in: {{player.l.currentLobby.countdown}}</div>
             <div id="start" class="button hunna" ng-click="player.startGame()" ng-show="player.l.currentLobby.members.indexOf(player.l.playerName) == 0">Start Game ></div>
