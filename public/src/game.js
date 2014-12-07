@@ -104,7 +104,7 @@ window.addEventListener("load",function() {
             this._super(p, {
                 sheet: "car",
                 sprite: "car",
-                scale: .2,
+                scale: .5,
                 collisionMask: Q.SPRITE_DEFAULT | Q.SPRITE_ACTIVE,
             });
             this.add('2d, carControls');
@@ -116,7 +116,7 @@ window.addEventListener("load",function() {
             this._super(d, {
                 sheet: "car",
                 sprite: "car",
-                scale: .2
+                scale: .5
             });
             this.add('2d');
         }
@@ -126,7 +126,7 @@ window.addEventListener("load",function() {
         Q.audio.play('LevelTheme1.mp3', {loop: true});
         Q.stageTMX("TinyCircle.tmx", stage)
         stage.add("viewport").follow(Q("Player").first());
-        stage.viewport.scale = 8;
+        stage.viewport.scale = 4;
     });
 
     Q.loadTMX(["car.png", "car.json", "TinyCircle.tmx", "LevelTheme1.mp3"], function() {
