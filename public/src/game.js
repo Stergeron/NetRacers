@@ -144,7 +144,7 @@ var startMatch = function(url) {
     var car = stage.insert(new Q.Player());
     var dummy = stage.insert(new Q.Dummy());
     stage.add("viewport").follow(car);
-    stage.viewport.scale = 12;
+    stage.viewport.scale = 4;
   });
   var authenticate = function(fn) {
     var socket = io.connect("/match");
