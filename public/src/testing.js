@@ -27,6 +27,12 @@
       socket.emit("leaveLobby", {name: this.l.currentLobby.name, player: this.l.playerName});
       this.l.view = "lobbies";
     };
+    this.createLobby = function(){
+      var lobname = this.l.playerName + "'s Lobby";
+      socket.emit("createLobby", this.l.playerName);
+      this.l.lobbies.push({name: lobname, members: [], open: true});
+      this.joinLobby(lobname);
+    };
     socket.on("updateLobby", function(lob) {
       if (findBy(l.lobbies, "name", lob.name) !== undefined) {
         l.lobbies[findForIndex(l.lobbies, "name", lob.name)] = lob;

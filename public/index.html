@@ -16,6 +16,9 @@
             <div class="u">{{lobby.members.length}} / 4</div>
             <div class="join">join ></div>
           </div>
+          <div ng-click="player.createLobby()" class="button hunna">
+            Create Lobby >
+          </div>
         </div>
         <div id="lobby" ng-show="player.l.view == 'lobby'">
           <div class="lobby" ng-repeat="person in player.l.currentLobby.members">

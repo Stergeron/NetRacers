@@ -10,15 +10,8 @@ var server = app.listen(port);
 
 var io = require('socket.io')(server);
 
-var lobbies = [{
-  name: "poo",
-  members: ["john", "jim"],
-  open: true
-}, {
-  name: "noo",
-  members: ["nothn"],
-  open: true
-}];
+var lobbies = [
+];
 
 var players = [];
 
@@ -36,7 +29,7 @@ io.on('connection', function(socket) {
     }
   });
   socket.on("joinLobby", function(us) {
-    lobbies[findForIndex(lobbies, "name", us.lob)].members.push(us.player);
+    findBy(lobbies, "name", us.lob).members.push(us.player);
     if (lobbies[findForIndex(lobbies, "name", us.lob)].members.length >= 4) {
       lobbies[findForIndex(lobbies, "name", us.lob)].open = false;
     }
@@ -48,6 +41,13 @@ io.on('connection', function(socket) {
   });
   socket.on("request", function(nm, cb) {
     cb(lobbies);
+  });
+  socket.on("createLobby", function(nm){
+    var lobbyname = nm + "'s Lobby";
+    if(findBy(lobbies, "name", lobbyname) === undefined){
+      lobbies.push({name: lobbyname, members: [], open: true});
+    }
+    io.emit("updateLobby", findBy(lobbies, "name", lobbyname));
   });
   socket.on('disconnect', function () {
     if(lobby !== undefined){
@@ -62,12 +62,14 @@ io.on('connection', function(socket) {
 var leaveLobby = function(lob) {
   var index = findForIndex(lobbies, "name", lob.name);
   lobbies[index].members.splice(lobbies[index].members.indexOf(lob.player), 1);
+  if(!lobbies[index].open) lobbies[index].open = true;
   if (lobbies[index].members.length < 1) {
     lobbies.splice(index, 1);
     io.emit("removeLobby", lob.name);
   }
-  if(!lobbies[index].open) lobbies[index].open = true;
-  io.emit("updateLobby", findBy(lobbies, "name", lob.name));
+  else {
+    io.emit("updateLobby", findBy(lobbies, "name", lob.name));
+  }
 };
 
 var findBy = function(arr, identifier, name) {
