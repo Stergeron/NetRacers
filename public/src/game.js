@@ -1,4 +1,4 @@
-window.addEventListener("load", function() {
+var startMatch = function(url) {
 
   var Q = Quintus({
       imagePath: "assets/images/",
@@ -224,4 +224,4 @@ window.addEventListener("load", function() {
       }
     }
   };
-});
+};
