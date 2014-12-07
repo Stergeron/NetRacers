@@ -4,6 +4,19 @@
     </head>
     <body>
       <div id="menu" ng-controller="Player as player">
+        <div id="main" ng-show="player.l.view == 'main'">
+          <div>
+            <img src="assets/images/netracer.png">
+          </div>
+
+          <div class="linkContainer">
+            <a href="#" ng-click="player.play()">Play Game</a>
+          </div>
+
+          <div class="linkContainer">
+            <a href="http://www.theopeninter.net/" target="_blank">What is net neutrality?</a>
+          </div>
+        </div>
         <div id="signin" ng-show="player.l.view == 'signin'">
           <input ng-model="player.l.playerName" type="text" placeholder="username">
           <div ng-click="player.signin()" class="button right">

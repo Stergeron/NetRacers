@@ -4,6 +4,9 @@
   app.controller("Player", function(g, socket) {
     this.l = g.context;
     var l = g.context;
+    this.play = function(){
+      this.l.view = "signin";
+    };
     this.signin = function(){
       socket.emit("joinGame", this.l.playerName, function(accept) {
         if(accept != "REJECT"){
@@ -81,7 +84,7 @@
 
   app.service("g", function(socket) {
     this.context = {
-      view: "signin",
+      view: "main",
       currentLobby: {},
       currentGame: [],
       lobbies: [],
