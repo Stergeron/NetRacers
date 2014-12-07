@@ -20,12 +20,7 @@ var startMatch = function(url){
     ['fire', 'O' ]]
   });
 
-  var ctrls = {
-    left: true,
-    right: false,
-    up: false,
-    down: false
-  };
+  var members = [];
 
   Q.component("carControls", {
 
@@ -71,15 +66,15 @@ var startMatch = function(url){
             p.diffX = 0;
             p.diffY = 0;
 
-            if(ctrls.left) {
+            if(members[0].left) {
               p.diffX = -p.stepDistance;
-            } else if(ctrls.right) {
+            } else if(members[0].right) {
               p.diffX = p.stepDistance;
             }
 
-            if(ctrls.up) {
+            if(members[0].up) {
               p.diffY = -p.stepDistance;
-            } else if(ctrls.down) {
+            } else if(members[0].down) {
               p.diffY = p.stepDistance;
             }
 
@@ -145,6 +140,15 @@ var startMatch = function(url){
           socket.on("begin", function(match){
             if(url[1] == match.name){
               fn(match.map);
+              members = match.members;
+              for(var i=0; i<members.length; i++){
+                members[i] = {player: members[i], up: false, down: false, left: false, right: false};
+              }
+              socket.on("keychange", function(k){
+                if(k.match == match.name){
+
+                }
+              });
             }
           });
         }

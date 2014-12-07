@@ -102,7 +102,7 @@ var match = io
       var cMatch = findBy(matches, "name", auth.match);
       fn("yes");
       if(cMatch.members.indexOf(auth.player) == cMatch.members.length-1){
-        match.emit("begin", {name: auth.match, map: cMatch.map});
+        match.emit("begin", {name: auth.match, map: cMatch.map, members: cMatch.members});
       }
     }
   });
@@ -140,7 +140,7 @@ var startGame = function(name){
   io.emit("startGame", name);
   var lob = findBy(lobbies, "name", name);
   lob.open = false;
-  matches.push({name: name, members: lob.members, map: lob.map});
+  matches.push(JSON.parse(JSON.stringify({name: name, members: lob.members, map: lob.map})));
   lob.countdown = -1;
   io.emit("updateLobby", findBy(lobbies, "name", name));
 };
