@@ -4,8 +4,14 @@
   app.controller("Player", function(g, socket) {
     this.l = g.context;
     var l = g.context;
+    this.main = function(){
+      this.l.view = "main";
+    };
     this.play = function(){
       this.l.view = "signin";
+    };
+    this.credits = function(){
+      this.l.view = "credits";
     };
     this.signin = function(){
       socket.emit("joinGame", this.l.playerName, function(accept) {
