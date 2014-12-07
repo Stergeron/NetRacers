@@ -129,28 +129,32 @@ var startMatch = function(url){
           }
         });
 
-    Q.scene("level1", function(stage) {
-        var socket = io.connect("/match");
-        socket.emit("authenticate", {player: url[0], match: url[1]}, function(accept){
-          if(accept == "yes"){
-            console.log("waiting");
-          }
-        });
-        socket.on("begin", function(match){
-          if(url[1] == match.name){
-            Q.audio.play('LevelTheme1.mp3', {loop: true});
-            Q.stageTMX("TinyCircle.tmx", stage);
-            var car = stage.insert(new Q.Player());
-            var dummy = stage.insert(new Q.Dummy());
-            stage.add("viewport").follow(car);
-            stage.viewport.scale = 12;
-          }
-        });
+    Q.scene("0", function(stage) {
+          Q.audio.play('LevelTheme1.mp3', {loop: true});
+          Q.stageTMX("TinyCircle.tmx", stage);
+          var car = stage.insert(new Q.Player());
+          var dummy = stage.insert(new Q.Dummy());
+          stage.add("viewport").follow(car);
+          stage.viewport.scale = 12;
     });
-
+    var authenticate = function(fn){
+      var socket = io.connect("/match");
+      socket.emit("authenticate", {player: url[0], match: url[1]}, function(accept){
+        if(accept == "yes"){
+          console.log("waiting");
+          socket.on("begin", function(match){
+            if(url[1] == match.name){
+              fn(match.map);
+            }
+          });
+        }
+      });
+    };
 
     Q.loadTMX(["car.png", "car.json", "TinyCircle.tmx", "LevelTheme1.mp3"], function() {
       Q.compileSheets("car.png","car.json");
-      Q.stageScene("level1");
+      authenticate(function(map){
+        Q.stageScene(map.toString());
+      });
     });
 };

@@ -102,7 +102,7 @@ var match = io
       var cMatch = findBy(matches, "name", auth.match);
       fn("yes");
       if(cMatch.members.indexOf(auth.player) == cMatch.members.length-1){
-        match.emit("begin", {name: auth.match});
+        match.emit("begin", {name: auth.match, map: cMatch.map});
       }
     }
   });
@@ -138,9 +138,10 @@ var leaveLobby = function(lob) {
 
 var startGame = function(name){
   io.emit("startGame", name);
-  findBy(lobbies, "name", name).open = false;
-  matches.push({name: name, members: findBy(lobbies, "name", name).members});
-  findBy(lobbies, "name", name).countdown = -1;
+  var lob = findBy(lobbies, "name", name);
+  lob.open = false;
+  matches.push({name: name, members: lob.members, map: lob.map});
+  lob.countdown = -1;
   io.emit("updateLobby", findBy(lobbies, "name", name));
 };
 
