@@ -16,30 +16,20 @@
           <div class="linkContainer">
             <a href="http://www.theopeninter.net/" target="_blank">What is net neutrality?</a>
           </div>
-
-          <div class="linkContainer">
-            <a href="#" ng-click="player.credits()">Credits</a>
-          </div>
         </div>
         <div id="signin" ng-show="player.l.view == 'signin'">
-          <div class="linkContainer">
-            <a href="#" ng-click="player.main()">Sign In</a>
-          </div>
           <input ng-model="player.l.playerName" type="text" placeholder="username">
           <div ng-click="player.signin()" class="button right">
             Log In
           </div>
         </div>
         <div id="lobbies" ng-show="player.l.view == 'lobbies'">
-          <div class="linkContainer">
-            <a href="#" ng-click="player.main()">Lobbies</a>
-          </div>
           <div class="lobby" ng-repeat="lobby in player.l.lobbies" ng-show="lobby.open" ng-click="player.joinLobby(lobby.name)">
             <div class="h">{{lobby.name}}</div>
             <div class="u">{{lobby.members.length}} / 4</div>
             <div class="join">join ></div>
           </div>
-          <div ng-click="player.createLobby()" class="button hunna center">
+          <div ng-click="player.createLobby()" class="button hunna">
             Create Lobby >
           </div>
         </div>
@@ -62,26 +52,6 @@
           <h1>{{player.l.maps[player.l.currentLobby.map]}}</h1>
           <div ng-class="{false: 'key', true: 'key pressed'}[plr.key == true]" ng-repeat="plr in player.l.currentGame">
             {{plr.member}}
-          </div>
-        </div>
-        <div id="credits" ng-show="player.l.view == 'credits'">
-          <div class="linkContainer">
-            <a href="#" ng-click="player.main()">Credits</a>
-          </div>
-          <div class="text">
-            <b>Music:</b>
-            <br>
-            Kevin Macleod
-            <br>
-            Multifaros
-            <br>
-            John Philip Sousa
-            <br>
-            Brian Boyko
-            <br><br>
-            <b>Assets:</b>
-            <br>
-            http://opengameart.org/content/race-track-tiles-0
           </div>
         </div>
       </div>
