@@ -29,6 +29,7 @@ io.on('connection', function(socket) {
     if(players.indexOf(nm) < 0){
       cb(nm);
       player = nm;
+      players.push(nm);
     }
     else {
       cb("REJECT");
@@ -61,10 +62,12 @@ io.on('connection', function(socket) {
 var leaveLobby = function(lob) {
   var index = findForIndex(lobbies, "name", lob.name);
   lobbies[index].members.splice(lobbies[index].members.indexOf(lob.player), 1);
-  if (findBy(lobbies, "name", lob.name).members.length < 1) {
-    lobbies.splice(findForIndex(lobbies, "name", lob.name), 1);
+  if (lobbies[index].members.length < 1) {
+    lobbies.splice(index, 1);
     io.emit("removeLobby", lob.name);
   }
+  if(!lobbies[index].open) lobbies[index].open = true;
+  io.emit("updateLobby", findBy(lobbies, "name", lob.name));
 };
 
 var findBy = function(arr, identifier, name) {

@@ -4,6 +4,16 @@
   app.controller("Player", function(g, socket) {
     this.l = g.context;
     var l = g.context;
+    this.signin = function(){
+      socket.emit("joinGame", this.l.playerName, function(accept) {
+        if(accept != "REJECT"){
+          l.view = "lobbies";
+        }
+        else {
+          l.playerName = "name taken";
+        }
+      });
+    };
     this.joinLobby = function(lob) {
       this.l.currentLobby = findBy(this.l.lobbies, "name", lob);
       socket.emit("joinLobby", {
@@ -11,10 +21,18 @@
         lob: lob
       });
       this.l.view = "lobby";
+      this.l.currentLobby.members.push(this.l.playerName);
+    };
+    this.leaveLobby = function(){
+      socket.emit("leaveLobby", {name: this.l.currentLobby.name, player: this.l.playerName});
+      this.l.view = "lobbies";
     };
     socket.on("updateLobby", function(lob) {
       if (findBy(l.lobbies, "name", lob.name) !== undefined) {
         l.lobbies[findForIndex(l.lobbies, "name", lob.name)] = lob;
+        if(l.currentLobby.name == lob.name){
+          l.currentLobby = lob;
+        }
       } else {
         l.lobbies.push(lob);
       }
@@ -27,10 +45,10 @@
 
   app.service("g", function(socket) {
     this.context = {
-      view: "lobbies",
+      view: "signin",
       currentLobby: {},
       lobbies: [],
-      playerName: "untitled"
+      playerName: ""
     };
     var ctx = this;
     this.init = function() {

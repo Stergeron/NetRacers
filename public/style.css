@@ -26,3 +26,30 @@
   text-align: right;
   color: #eae9e9;
 }
+
+input {
+  width: 100%;
+  font-size: 20px;
+}
+
+#signin {
+  width: 20%;
+}
+
+.button {
+  margin-top: 10px;
+  font-size: 14px;
+  padding: 5px;
+  background-color: #5a5a5a;
+  color: #FFFFFF;
+  font-family: Arial;
+  cursor: pointer;
+}
+
+.fifty {
+  width: 50px;
+}
+
+.right {
+  float: right;
+}
