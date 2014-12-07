@@ -20,6 +20,13 @@ var startMatch = function(url){
     ['fire', 'O' ]]
   });
 
+  var ctrls = {
+    left: true,
+    right: false,
+    up: false,
+    down: false
+  };
+
   Q.component("carControls", {
 
     added: function() {
@@ -51,7 +58,7 @@ var startMatch = function(url){
           if(p.stepping) {
             p.x += p.diffX * dt / p.stepDelay;
             p.y += p.diffY * dt / p.stepDelay;
-            p.angle = p.angl
+            p.angle = p.angl;
           }
 
           if(p.stepWait > 0) { return; }
@@ -64,15 +71,15 @@ var startMatch = function(url){
             p.diffX = 0;
             p.diffY = 0;
 
-            if(Q.inputs['left']) {
+            if(ctrls.left) {
               p.diffX = -p.stepDistance;
-            } else if(Q.inputs['right']) {
+            } else if(ctrls.right) {
               p.diffX = p.stepDistance;
             }
 
-            if(Q.inputs['up']) {
+            if(ctrls.up) {
               p.diffY = -p.stepDistance;
-            } else if(Q.inputs['down']) {
+            } else if(ctrls.down) {
               p.diffY = p.stepDistance;
             }
 
@@ -104,7 +111,7 @@ var startMatch = function(url){
             this._super(p, {
               sheet: "car",
               sprite: "car",
-              scale: .5,
+              scale: 0.5,
               collisionMask: Q.SPRITE_DEFAULT | Q.SPRITE_ACTIVE,
             });
             this.add('2d, carControls');
@@ -116,12 +123,12 @@ var startMatch = function(url){
             this._super(d, {
               sheet: "car",
               sprite: "car",
-              scale: .5
+              scale: 0.5
             });
             this.add('2d');
           }
         });
-        
+
     Q.scene("level1", function(stage) {
         var socket = io.connect("/match");
         socket.emit("authenticate", {player: url[0], match: url[1]}, function(accept){
