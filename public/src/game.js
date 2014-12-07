@@ -103,7 +103,7 @@ window.addEventListener("load",function() {
         init: function(p) {
             this._super(p, {
                 asset: "car.png",
-                scale: .2
+                scale: 0.2
             });
             this.add('2d, carControls');
         }
@@ -113,19 +113,27 @@ window.addEventListener("load",function() {
         init: function(d) {
             this._super(d, {
                 asset: "car.png",
-                scale: .2
+                scale: 0.2
             });
             this.add('2d');
         }
     });
 
     Q.scene("level1", function(stage) {
-        Q.audio.play('LevelTheme1.mp3', {loop: true});
-        Q.stageTMX("TinyCircle.tmx", stage)
-        var car = stage.insert(new Q.Player());
-        var dummy = stage.insert(new Q.Dummy());
-        stage.add("viewport").follow(car);
-        stage.viewport.scale = 12;
+        var url = window.location.split("#");
+        var dat = url[1].split("&");
+        var socket = io.connect("/match");
+        socket.emit("authenticate", {player: dat[1], lob: dat[2]}, function(accept){
+          if(accept == "yes"){
+            console.log("accepted");
+            Q.audio.play('LevelTheme1.mp3', {loop: true});
+            Q.stageTMX("TinyCircle.tmx", stage);
+            var car = stage.insert(new Q.Player());
+            var dummy = stage.insert(new Q.Dummy());
+            stage.add("viewport").follow(car);
+            stage.viewport.scale = 12;
+          }
+        });
     });
 
     Q.loadTMX(["car.png", "TinyCircle.tmx", "LevelTheme1.mp3"], function() {

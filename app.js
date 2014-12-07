@@ -14,16 +14,19 @@ var lobbies = [];
 
 var players = [];
 
+var matches = [];
+
 var rejectednames = [""];
 
 io.on('connection', function(socket) {
   try {
     var player = {};
     socket.on("joinGame", function(nm, cb) {
-      if (players.indexOf(nm) < 0 && rejectednames.indexOf(nm) < 0 && nm.length < 18) {
+      if (findForIndex(players, "name", player.name) === undefined && rejectednames.indexOf(nm) < 0 && nm.length < 18) {
         cb(nm);
         player.name = nm;
-        players.push(nm);
+        player.id = socket.id;
+        players.push(player);
       } else {
         cb("REJECT");
       }
@@ -83,12 +86,31 @@ io.on('connection', function(socket) {
         });
       }
       if (player.name !== undefined) {
-        players.splice(players.indexOf(player.name), 1);
+        players.splice(findForIndex(players, "name", player.name), 1);
       }
     });
   } catch (err) {
     console.log(err);
   }
+});
+
+var match = io
+.of('/match')
+.on('connection', function (socket) {
+  var player = {};
+  socket.on("authenticate", function(auth, fn){
+    if(findForIndex(players, "name", auth.player) !== undefined){
+      fn("yes");
+      var matchName = lobbies[auth.lob].name;
+      findBy(findBy(matches, "name", matchName).members, "player", auth.player).loaded = true;
+      if(findForIndex(findBy(matches, "name", matchName).members, "player", auth.player) == findBy(matches, "name", matchName).members.length-1){
+        match.emit("begin", {name: matchName});
+      }
+    }
+    else {
+      fn("no");
+    }
+  });
 });
 
 setInterval(function(){
@@ -120,6 +142,11 @@ var leaveLobby = function(lob) {
 var startGame = function(name){
   io.emit("startGame", name);
   findBy(lobbies, "name", name).open = false;
+  matches.push({name: name, members: findBy(lobbies, "name", name).members});
+  var match = matches[matches.length-1].members;
+  for(var i=0; match.length; i++){
+    match[i] = {player: match[i], loaded: false};
+  }
   findBy(lobbies, "name", name).countdown = -1;
   io.emit("updateLobby", findBy(lobbies, "name", name));
 };
