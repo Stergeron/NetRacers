@@ -26,6 +26,9 @@ window.addEventListener("load", function() {
     ]
   });
 
+  var members = [];
+  var socket = io.connect("/match");
+  var myself = url[0];
   Q.component("carControls", {
 
     added: function() {
@@ -76,15 +79,15 @@ window.addEventListener("load", function() {
       p.diffX = 0;
       p.diffY = 0;
 
-      if (Q.inputs['left']) {
+      if (members[0]['left']) {
         p.diffX = -p.stepDistance;
-      } else if (Q.inputs['right']) {
+      } else if (members[0]['right']) {
         p.diffX = p.stepDistance;
       }
 
-      if (Q.inputs['up']) {
+      if (members[0]['up']) {
         p.diffY = -p.stepDistance;
-      } else if (Q.inputs['down']) {
+      } else if (members[0]['down']) {
         p.diffY = p.stepDistance;
       }
 
