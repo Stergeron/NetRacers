@@ -120,10 +120,10 @@ window.addEventListener("load",function() {
     });
 
     Q.scene("level1", function(stage) {
-        var url = window.location.split("#");
-        var dat = url[1].split("&");
+        if(window.location.hash !== undefined){
+        var url = window.location.hash.split("#")[1].split("&");
         var socket = io.connect("/match");
-        socket.emit("authenticate", {player: dat[1], lob: dat[2]}, function(accept){
+        socket.emit("authenticate", {player: url[0], lob: url[1]}, function(accept){
           if(accept == "yes"){
             console.log("accepted");
             Q.audio.play('LevelTheme1.mp3', {loop: true});
@@ -134,6 +134,7 @@ window.addEventListener("load",function() {
             stage.viewport.scale = 12;
           }
         });
+      }
     });
 
     Q.loadTMX(["car.png", "TinyCircle.tmx", "LevelTheme1.mp3"], function() {

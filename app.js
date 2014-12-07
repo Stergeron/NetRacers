@@ -79,15 +79,13 @@ io.on('connection', function(socket) {
       io.emit("packet", dat);
     });
     socket.on('disconnect', function() {
-      if (player.lobby !== undefined) {
+      if (player.lobby !== undefined && findBy(lobbies, "name", player.lobby).open) {
         leaveLobby({
           name: player.lobby,
           player: player.name
         });
       }
-      if (player.name !== undefined) {
-        players.splice(findForIndex(players, "name", player.name), 1);
-      }
+      if (player.lobby === undefined && player.name ===)
     });
   } catch (err) {
     console.log(err);
@@ -102,7 +100,6 @@ var match = io
     if(findForIndex(players, "name", auth.player) !== undefined){
       fn("yes");
       var matchName = lobbies[auth.lob].name;
-      findBy(findBy(matches, "name", matchName).members, "player", auth.player).loaded = true;
       if(findForIndex(findBy(matches, "name", matchName).members, "player", auth.player) == findBy(matches, "name", matchName).members.length-1){
         match.emit("begin", {name: matchName});
       }
@@ -119,10 +116,22 @@ setInterval(function(){
       startGame(lobbies[i].name);
       lobbies[i].countdown--;
     }
-    else if(lobbies[i].countdown === -1);
     else {
       lobbies[i].countdown--;
-      io.emit("updateLobby", lobbies[i]);
+      if(lobbies[i].countdown > 0){
+        io.emit("updateLobby", lobbies[i]);
+      }
+      else if(lobbies[i].countdown < 0){
+        if(lobbies[i].countdown == -200){
+          io.emit("removeLobby", lobbies[i].name);
+          for(var x=0; x<lobbies[i].members.length; x++){
+            if(findBy(players, "name", lobbies[i].members[x]).lobby == lobbies[i].name){
+              players.splice(players.indexOf(lobbies[i].members[x].name), 1);
+            }
+          }
+          lobbies.splice(i, 1);
+        }
+      }
     }
   }
 }, 1000);
@@ -143,10 +152,6 @@ var startGame = function(name){
   io.emit("startGame", name);
   findBy(lobbies, "name", name).open = false;
   matches.push({name: name, members: findBy(lobbies, "name", name).members});
-  var match = matches[matches.length-1].members;
-  for(var i=0; match.length; i++){
-    match[i] = {player: match[i], loaded: false};
-  }
   findBy(lobbies, "name", name).countdown = -1;
   io.emit("updateLobby", findBy(lobbies, "name", name));
 };
