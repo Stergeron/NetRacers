@@ -58,6 +58,9 @@
             < leave
           </div>
         </div>
+        <div id="gameFrame" ng-show="player.l.view == 'play'">
+          <canvas id="quintus"></canvas>
+        </div>
         <div id="credits" ng-show="player.l.view == 'credits'">
           <div class="linkContainer">
             <a href="#" ng-click="player.main()">Credits</a>
