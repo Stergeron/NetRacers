@@ -25,8 +25,8 @@ window.addEventListener("load",function() {
         added: function() {
             var p = this.entity.p;
 
-            if(!p.stepDistance) { p.stepDistance = 16; }
-            if(!p.stepDelay) { p.stepDelay = .2; }
+            if(!p.stepDistance) { p.stepDistance = 32; }
+            if(!p.stepDelay) { p.stepDelay = 0.2; }
 
             p.stepWait = 0;
             this.entity.on("step",this,"step");
@@ -103,7 +103,8 @@ window.addEventListener("load",function() {
         init: function(p) {
             this._super(p, {
                 asset: "car.png",
-                scale: .2
+                scale: 1,
+                collisionMask: Q.SPRITE_FRIENDLY
             });
             this.add('2d, carControls');
         }
@@ -112,7 +113,8 @@ window.addEventListener("load",function() {
     Q.Sprite.extend("Dummy", {
         init: function(d) {
             this._super(d, {
-                asset: "car.png",
+                sheet: "car",
+                sprite: "car",
                 scale: .2
             });
             this.add('2d');
@@ -121,14 +123,15 @@ window.addEventListener("load",function() {
 
     Q.scene("level1", function(stage) {
         Q.audio.play('LevelTheme1.mp3', {loop: true});
-        Q.stageTMX("TinyCircle.tmx", stage)
-        var car = stage.insert(new Q.Player());
-        var dummy = stage.insert(new Q.Dummy());
-        stage.add("viewport").follow(car);
-        stage.viewport.scale = 12;
+        Q.stageTMX("TinyCircle2.tmx", stage)
+        //var car = stage.insert(new Q.Player());
+        //var dummy = stage.insert(new Q.Dummy());
+        stage.add("viewport").follow(Q("Player").first());
+        stage.viewport.scale = 1;
     });
 
-    Q.loadTMX(["car.png", "TinyCircle.tmx", "LevelTheme1.mp3"], function() {
+    Q.loadTMX(["car.png", "car.json", "TinyCircle2.tmx", "LevelTheme1.mp3"], function() {
+        Q.compileSheets("car.png","car.json");
         Q.stageScene("level1");
     });
 });
