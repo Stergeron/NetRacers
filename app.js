@@ -32,7 +32,7 @@ io.on('connection', function(socket) {
       }
     });
     socket.on("joinLobby", function(us) {
-      if(us.player == player.name){
+      if (us.player == player.name) {
         findBy(lobbies, "name", us.lob).members.push(us.player);
         if (lobbies[findForIndex(lobbies, "name", us.lob)].members.length >= 4) {
           lobbies[findForIndex(lobbies, "name", us.lob)].open = false;
@@ -47,7 +47,7 @@ io.on('connection', function(socket) {
       io.emit("updateLobby", lob);
     });
     socket.on("leaveLobby", function(lob) {
-      if(player.name == lob.player){
+      if (player.name == lob.player) {
         leaveLobby(lob);
         player.lobby = undefined;
       }
@@ -56,26 +56,26 @@ io.on('connection', function(socket) {
       cb(lobbies);
     });
     socket.on("createLobby", function(nm) {
-      if(nm == player.name && lobbies.length <= 25){
+      if (nm == player.name && lobbies.length <= 25) {
         var lobbyname = nm + "'s Lobby";
         if (findBy(lobbies, "name", lobbyname) === undefined) {
-            lobbies.push({
-              name: lobbyname,
-              members: [],
-              open: true,
-              map: 0,
-              countdown: 90
-            });
-          }
+          lobbies.push({
+            name: lobbyname,
+            members: [],
+            open: true,
+            map: 0,
+            countdown: 90
+          });
+        }
         io.emit("updateLobby", findBy(lobbies, "name", lobbyname));
       }
     });
-    socket.on("startGame", function(l){
-      if(player.name == l.player){
+    socket.on("startGame", function(l) {
+      if (player.name == l.player) {
         startGame(l.name);
       }
     });
-    socket.on("packet", function(dat){
+    socket.on("packet", function(dat) {
       io.emit("packet", dat);
     });
     socket.on('disconnect', function() {
@@ -85,7 +85,7 @@ io.on('connection', function(socket) {
           player: player.name
         });
       }
-      if (player.name !== undefined){
+      if (player.name !== undefined) {
         players.splice(findForIndex(players, "name", player.name), 1);
       }
     });
@@ -95,29 +95,33 @@ io.on('connection', function(socket) {
 });
 
 var match = io
-.of('/match')
-.on('connection', function (socket) {
-  var player = {};
-  socket.on("authenticate", function(auth, fn){{
-      var cMatch = findBy(matches, "name", auth.match);
-      fn("yes");
-      if(cMatch.members.indexOf(auth.player) == cMatch.members.length-1){
-        match.emit("begin", {name: auth.match, map: cMatch.map, members: cMatch.members});
+  .of('/match')
+  .on('connection', function(socket) {
+    var player = {};
+    socket.on("authenticate", function(auth, fn) {
+      {
+        var cMatch = findBy(matches, "name", auth.match);
+        fn("yes");
+        if (cMatch.members.indexOf(auth.player) == cMatch.members.length - 1) {
+          match.emit("begin", {
+            name: auth.match,
+            map: cMatch.map,
+            members: cMatch.members
+          });
+        }
       }
-    }
+    });
   });
-});
 
-setInterval(function(){
-  for(var i=0; i<lobbies.length; i++){
-    if(lobbies[i].countdown === 0){
+setInterval(function() {
+  for (var i = 0; i < lobbies.length; i++) {
+    if (lobbies[i].countdown === 0) {
       startGame(lobbies[i].name);
       lobbies[i].countdown--;
-    }
-    else if(lobbies[i].countdown < 0);
+    } else if (lobbies[i].countdown < 0);
     else {
       lobbies[i].countdown--;
-      if(lobbies[i].countdown > 0){
+      if (lobbies[i].countdown > 0) {
         io.emit("updateLobby", lobbies[i]);
       }
     }
@@ -136,11 +140,15 @@ var leaveLobby = function(lob) {
   }
 };
 
-var startGame = function(name){
+var startGame = function(name) {
   io.emit("startGame", name);
   var lob = findBy(lobbies, "name", name);
   lob.open = false;
-  matches.push(JSON.parse(JSON.stringify({name: name, members: lob.members, map: lob.map})));
+  matches.push(JSON.parse(JSON.stringify({
+    name: name,
+    members: lob.members,
+    map: lob.map
+  })));
   lob.countdown = -1;
   io.emit("updateLobby", findBy(lobbies, "name", name));
 };

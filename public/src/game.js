@@ -1,23 +1,29 @@
-var startMatch = function(url){
+var startMatch = function(url) {
 
-  var Q = Quintus({ imagePath: "assets/images/",
-  audioPath: "assets/music/",
-  dataPath: "assets/maps/",
-  audioSupported: ["mp3"] })
-  .include("Sprites, Scenes, Input, 2D, Anim, Touch, UI, Audio, TMX")
-  .setup({ maximize: true })
-  .enableSound()
-  .controls(true).touch();
+  var Q = Quintus({
+      imagePath: "assets/images/",
+      audioPath: "assets/music/",
+      dataPath: "assets/maps/",
+      audioSupported: ["mp3"]
+    })
+    .include("Sprites, Scenes, Input, 2D, Anim, Touch, UI, Audio, TMX")
+    .setup({
+      maximize: true
+    })
+    .enableSound()
+    .controls(true).touch();
 
   Q.gravityY = 0;
   Q.gravityX = 0;
 
   Q.input.touchControls({
-    controls:  [ ['left','<' ],
-    ['right','>' ],
-    ["up", "^"],
-    ["down", "V"],
-    ['fire', 'O' ]]
+    controls: [
+      ['left', '<'],
+      ['right', '>'],
+      ["up", "^"],
+      ["down", "V"],
+      ['fire', 'O']
+    ]
   });
 
   var members = [];
@@ -27,138 +33,179 @@ var startMatch = function(url){
     added: function() {
       var p = this.entity.p;
 
-      if(!p.stepDistance) { p.stepDistance = 16; }
-        if(!p.stepDelay) { p.stepDelay = 0.1; }
+      if (!p.stepDistance) {
+        p.stepDistance = 16;
+      }
+      if (!p.stepDelay) {
+        p.stepDelay = 0.1;
+      }
 
-          p.stepWait = 0;
-          this.entity.on("step",this,"step");
-          this.entity.on("hit", this,"collision");
-        },
+      p.stepWait = 0;
+      this.entity.on("step", this, "step");
+      this.entity.on("hit", this, "collision");
+    },
 
-        collision: function(col) {
-          var p = this.entity.p;
+    collision: function(col) {
+      var p = this.entity.p;
 
-          if(p.stepping) {
-            p.stepping = false;
-            p.x = p.origX;
-            p.y = p.origY;
-          }
+      if (p.stepping) {
+        p.stepping = false;
+        p.x = p.origX;
+        p.y = p.origY;
+      }
 
-        },
+    },
 
-        step: function(dt) {
-          var p = this.entity.p,
-          moved = false;
-          p.stepWait -= dt;
-          if(p.stepping) {
-            p.x += p.diffX * dt / p.stepDelay;
-            p.y += p.diffY * dt / p.stepDelay;
-            p.angle = p.angl;
-          }
+    step: function(dt) {
+      var p = this.entity.p,
+        moved = false;
+      p.stepWait -= dt;
+      if (p.stepping) {
+        p.x += p.diffX * dt / p.stepDelay;
+        p.y += p.diffY * dt / p.stepDelay;
+        p.angle = p.angl;
+      }
 
-          if(p.stepWait > 0) { return; }
-            if(p.stepping) {
-              p.x = p.destX;
-              p.y = p.destY;
-            }
-            p.stepping = false;
+      if (p.stepWait > 0) {
+        return;
+      }
+      if (p.stepping) {
+        p.x = p.destX;
+        p.y = p.destY;
+      }
+      p.stepping = false;
 
-            p.diffX = 0;
-            p.diffY = 0;
+      p.diffX = 0;
+      p.diffY = 0;
 
-            if(members[0].left) {
-              p.diffX = -p.stepDistance;
-            } else if(members[0].right) {
-              p.diffX = p.stepDistance;
-            }
+      if (members[0].left) {
+        p.diffX = -p.stepDistance;
+      } else if (members[0].right) {
+        p.diffX = p.stepDistance;
+      }
 
-            if(members[0].up) {
-              p.diffY = -p.stepDistance;
-            } else if(members[0].down) {
-              p.diffY = p.stepDistance;
-            }
+      if (members[0].up) {
+        p.diffY = -p.stepDistance;
+      } else if (members[0].down) {
+        p.diffY = p.stepDistance;
+      }
 
-            p.angl = 0;
-            if(p.diffX < 0) {
-              p.angl = 90-Math.atan2(-p.diffY, p.diffX)*180/Math.PI;
-            } else if(p.diffX > 0) {
-              p.angl = 90-Math.atan2(-p.diffY, p.diffX)*180/Math.PI;
-            } else if(p.diffY > 0) {
-              p.angl = 180;
-            } else if(p.diffY < 0){
-              p.angl = 0;
-            }
+      p.angl = 0;
+      if (p.diffX < 0) {
+        p.angl = 90 - Math.atan2(-p.diffY, p.diffX) * 180 / Math.PI;
+      } else if (p.diffX > 0) {
+        p.angl = 90 - Math.atan2(-p.diffY, p.diffX) * 180 / Math.PI;
+      } else if (p.diffY > 0) {
+        p.angl = 180;
+      } else if (p.diffY < 0) {
+        p.angl = 0;
+      }
 
-            if(p.diffY || p.diffX ) {
-              p.stepping = true;
-              p.origX = p.x;
-              p.origY = p.y;
-              p.destX = p.x + p.diffX;
-              p.destY = p.y + p.diffY;
-              p.stepWait = p.stepDelay;
-            }
+      if (p.diffY || p.diffX) {
+        p.stepping = true;
+        p.origX = p.x;
+        p.origY = p.y;
+        p.destX = p.x + p.diffX;
+        p.destY = p.y + p.diffY;
+        p.stepWait = p.stepDelay;
+      }
 
-          }
-        });
+    }
+  });
 
-        Q.Sprite.extend("Player",{ //Create car sprite
-          init: function(p) {
-            this._super(p, {
-              sheet: "car",
-              sprite: "car",
-              scale: 0.5,
-              collisionMask: Q.SPRITE_DEFAULT | Q.SPRITE_ACTIVE,
-            });
-            this.add('2d, carControls');
-          }
-        });
+  Q.Sprite.extend("Player", { //Create car sprite
+    init: function(p) {
+      this._super(p, {
+        sheet: "car",
+        sprite: "car",
+        scale: 0.5,
+        collisionMask: Q.SPRITE_DEFAULT | Q.SPRITE_ACTIVE,
+      });
+      this.add('2d, carControls');
+    }
+  });
 
-        Q.Sprite.extend("Dummy", {
-          init: function(d) {
-            this._super(d, {
-              sheet: "car",
-              sprite: "car",
-              scale: 0.5
-            });
-            this.add('2d');
-          }
-        });
+  Q.Sprite.extend("Dummy", {
+    init: function(d) {
+      this._super(d, {
+        sheet: "car",
+        sprite: "car",
+        scale: 0.5
+      });
+      this.add('2d');
+    }
+  });
 
-    Q.scene("0", function(stage) {
-          Q.audio.play('LevelTheme1.mp3', {loop: true});
-          Q.stageTMX("TinyCircle.tmx", stage);
-          var car = stage.insert(new Q.Player());
-          var dummy = stage.insert(new Q.Dummy());
-          stage.add("viewport").follow(car);
-          stage.viewport.scale = 12;
+  Q.scene("0", function(stage) {
+    Q.audio.play('LevelTheme1.mp3', {
+      loop: true
     });
-    var authenticate = function(fn){
-      var socket = io.connect("/match");
-      socket.emit("authenticate", {player: url[0], match: url[1]}, function(accept){
-        if(accept == "yes"){
-          console.log("waiting");
-          socket.on("begin", function(match){
-            if(url[1] == match.name){
-              fn(match.map);
-              members = match.members;
-              for(var i=0; i<members.length; i++){
-                members[i] = {player: members[i], up: false, down: false, left: false, right: false};
+    Q.stageTMX("TinyCircle.tmx", stage);
+    var car = stage.insert(new Q.Player());
+    var dummy = stage.insert(new Q.Dummy());
+    stage.add("viewport").follow(car);
+    stage.viewport.scale = 12;
+  });
+  var authenticate = function(fn) {
+    var socket = io.connect("/match");
+    socket.emit("authenticate", {
+      player: url[0],
+      match: url[1]
+    }, function(accept) {
+      if (accept == "yes") {
+        console.log("waiting");
+        socket.on("begin", function(match) {
+          if (url[1] == match.name) {
+            fn(match.map);
+            members = match.members;
+            for (var i = 0; i < members.length; i++) {
+              members[i] = {
+                player: members[i],
+                up: false,
+                down: false,
+                left: false,
+                right: false
+              };
+            }
+            socket.on("keychange", function(k) {
+              if (k.match == match.name) {
+
               }
-              socket.on("keychange", function(k){
-                if(k.match == match.name){
-
-                }
-              });
-            }
-          });
-        }
-      });
-    };
-
-    Q.loadTMX(["car.png", "car.json", "TinyCircle.tmx", "LevelTheme1.mp3"], function() {
-      Q.compileSheets("car.png","car.json");
-      authenticate(function(map){
-        Q.stageScene(map.toString());
-      });
+            });
+          }
+        });
+      }
     });
+  };
+
+  Q.loadTMX(["car.png", "car.json", "TinyCircle.tmx", "LevelTheme1.mp3"], function() {
+    Q.compileSheets("car.png", "car.json");
+    authenticate(function(map) {
+      Q.stageScene(map.toString());
+    });
+  });
+  window.addEventListener('keydown', function(e) {
+    switch (e.keyCode) {
+      case 38:
+        break;
+      case 40:
+        break;
+      case 37:
+        break;
+      case 39:
+        break;
+    }
+  }, false);
+  window.addEventListener('keyup', function(e) {
+    switch (e.keyCode) {
+      case 38:
+        break;
+      case 40:
+        break;
+      case 37:
+        break;
+      case 39:
+        break;
+    }
+  }, false);
 };
