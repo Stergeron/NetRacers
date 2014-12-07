@@ -38,9 +38,12 @@
     };
     this.createLobby = function(){
       var lobname = this.l.playerName + "'s Lobby";
+      var ok = false;
       socket.emit("createLobby", this.l.playerName);
-      this.l.lobbies.push({name: lobname, members: [], open: true});
-      this.joinLobby(lobname);
+      if(this.l.lobbies.length <= 25){
+        this.l.lobbies.push({name: lobname, members: [], open: true});
+        this.joinLobby(lobname);
+      }
     };
     this.changeMap = function(){
       if(this.l.currentLobby.map >= this.l.maps.length-1){
