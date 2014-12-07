@@ -55,7 +55,7 @@ io.on('connection', function(socket) {
     socket.on("request", function(nm, cb) {
       cb(lobbies);
     });
-    socket.on("createLobby", function(nm, fn) {
+    socket.on("createLobby", function(nm) {
       if(nm == player.name && lobbies.length <= 25){
         var lobbyname = nm + "'s Lobby";
         if (findBy(lobbies, "name", lobbyname) === undefined) {
@@ -68,10 +68,6 @@ io.on('connection', function(socket) {
             });
           }
         io.emit("updateLobby", findBy(lobbies, "name", lobbyname));
-        fn(true);
-      }
-      else {
-        fn(false);
       }
     });
     socket.on("startGame", function(l){
