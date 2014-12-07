@@ -126,7 +126,7 @@ window.addEventListener("load",function() {
         //var car = stage.insert(new Q.Player());
         //var dummy = stage.insert(new Q.Dummy());
         stage.add("viewport").follow(Q("Player").first());
-        stage.viewport.scale = 1;
+        stage.viewport.scale = 8;
     });
 
     Q.debug = true;
