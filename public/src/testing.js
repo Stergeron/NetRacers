@@ -40,6 +40,20 @@
       this.l.currentLobby.map++;
       socket.emit("changeMap", {map: this.l.currentLobby.map, lobby: this.l.currentLobby.name});
     };
+    this.startGame = function(){
+      socket.emit("startGame", {name: this.l.currentLobby.name, player: this.l.playerName});
+    };
+    this.keydown = function(){
+      socket.emit("packet", {game: this.l.currentLobby.name, member: this.l.playerName, pressed: true});
+    };
+    this.keyup = function(){
+      socket.emit("packet", {game: this.l.currentLobby.name, member: this.l.playerName, pressed: false});
+    };
+    socket.on("packet", function(dat){
+      if(dat.game == l.currentLobby.name){
+        findBy(l.currentGame, "member", dat.member).pressed = dat.pressed;
+      }
+    });
     socket.on("updateLobby", function(lob) {
       if (findBy(l.lobbies, "name", lob.name) !== undefined) {
         l.lobbies[findForIndex(l.lobbies, "name", lob.name)] = lob;
@@ -53,6 +67,15 @@
     socket.on("removeLobby", function(lob) {
       l.lobbies.splice(findForIndex(l.lobbies, "name", lob.name), 1);
     });
+    socket.on("startGame", function(name){
+      if(l.currentLobby.name == name){
+        l.view = "game";
+        for(var i=0; i<l.currentLobby.members.length; i++){
+          var c = l.currentLobby.members[i];
+          l.currentGame.push({member: c, pressed: false});
+        }
+      }
+    });
     g.init();
   });
 
@@ -60,6 +83,7 @@
     this.context = {
       view: "signin",
       currentLobby: {},
+      currentGame: [],
       lobbies: [],
       playerName: "",
       maps: ["Circuit", "Roundabout", "Twisty Turny"]

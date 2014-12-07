@@ -24,11 +24,21 @@
           <div class="lobby" ng-repeat="person in player.l.currentLobby.members">
             <div class="u">{{person}}</div>
           </div>
-          <div id="map" class="right">
-            Map: <div class="button fifty inline" ng-click="player.changeMap()">{{player.l.maps[player.l.currentLobby.map]}}</div>
+          <div class="right">
+            <div id="map">
+              Map: <div class="button fifty inline" ng-click="player.changeMap()">{{player.l.maps[player.l.currentLobby.map]}}</div>
+            </div>
+            <div id="countdown" class="button hunna" ng-show="player.l.currentLobby.members.indexOf(player.l.playerName) > 0">Starting in: {{player.l.currentLobby.countdown}}</div>
+            <div id="start" class="button hunna" ng-click="player.startGame()" ng-show="player.l.currentLobby.members.indexOf(player.l.playerName) == 0">Start Game ></div>
           </div>
           <div ng-click="player.leaveLobby()" class="button fifty">
             < leave
+          </div>
+        </div>
+        <div id="gameframe" ng-show="player.l.view == 'game'" ng-keydown="player.keydown()" ng-keyup="player.keyup()">
+          <h1>{{player.l.maps[player.l.currentLobby.map]}}</h1>
+          <div ng-class="{false: 'key', true: 'key pressed'}[plr.key == true]" ng-repeat="plr in player.l.currentGame">
+            {{plr.member}}
           </div>
         </div>
       </div>
