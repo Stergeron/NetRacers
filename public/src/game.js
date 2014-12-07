@@ -5,7 +5,7 @@ window.addEventListener("load",function() {
                       dataPath: "assets/maps/",
                       audioSupported: ["mp3"] })
         .include("Sprites, Scenes, Input, 2D, Anim, Touch, UI, Audio, TMX")
-        .setup({ maximize: true })
+        .setup({maximize: true})
         .enableSound()
         .controls(true).touch();
 
@@ -26,7 +26,7 @@ window.addEventListener("load",function() {
             var p = this.entity.p;
 
             if(!p.stepDistance) { p.stepDistance = 16; }
-            if(!p.stepDelay) { p.stepDelay = .2; }
+            if(!p.stepDelay) { p.stepDelay = 0.2; }
 
             p.stepWait = 0;
             this.entity.on("step",this,"step");

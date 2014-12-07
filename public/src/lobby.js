@@ -78,11 +78,7 @@
     });
     socket.on("startGame", function(name){
       if(l.currentLobby.name == name){
-        l.view = "game";
-        for(var i=0; i<l.currentLobby.members.length; i++){
-          var c = l.currentLobby.members[i];
-          l.currentGame.push({member: c, pressed: false});
-        }
+        window.location = "/racers.html";
       }
     });
     g.init();

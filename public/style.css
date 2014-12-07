@@ -127,3 +127,18 @@ input {
 .pressed {
   background-color: #4dcc66;
 }
+
+#gameframe {
+  width: 100%;
+  height: 100%;
+}
+
+#netracers {
+  width: 100%;
+  height: 100%;
+}
+
+#netracers_container {
+  width: 100%;
+  height: 100%;
+}

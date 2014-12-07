@@ -58,12 +58,6 @@
             < leave
           </div>
         </div>
-        <div id="gameframe" ng-show="player.l.view == 'game'" ng-keydown="player.keydown()" ng-keyup="player.keyup()">
-          <h1>{{player.l.maps[player.l.currentLobby.map]}}</h1>
-          <div ng-class="{false: 'key', true: 'key pressed'}[plr.key == true]" ng-repeat="plr in player.l.currentGame">
-            {{plr.member}}
-          </div>
-        </div>
         <div id="credits" ng-show="player.l.view == 'credits'">
           <div class="linkContainer">
             <a href="#" ng-click="player.main()">Credits</a>
@@ -86,10 +80,7 @@
         </div>
       </div>
       <script src="socket.io/socket.io.js"></script>
-      <script src="lib/quintus-all.js"></script>
       <script src="lib/angular.min.js"></script>
-      <script src="lib/quintus-all.js"></script>
       <script src="src/lobby.js"></script>
-      <script src="src/game.js"></script>
     </body>
 </html>
