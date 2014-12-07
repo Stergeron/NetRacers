@@ -1,6 +1,6 @@
 window.addEventListener("load",function() {
 
-    var Q = Quintus({ imagePath: "assets/",
+    var Q = Quintus({ imagePath: "assets/images/",
                       audioPath: "assets/music/",
                       dataPath: "assets/maps/",
                       audioSupported: ["mp3"] })
