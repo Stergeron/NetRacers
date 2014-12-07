@@ -14,11 +14,13 @@ var lobbies = [];
 
 var players = [];
 
+var rejectednames = [""];
+
 io.on('connection', function(socket) {
   try {
     var player = {};
     socket.on("joinGame", function(nm, cb) {
-      if (players.indexOf(nm) < 0) {
+      if (players.indexOf(nm) < 0 && rejectednames.indexOf(nm) < 0 && nm.length < 18) {
         cb(nm);
         player.name = nm;
         players.push(nm);
@@ -44,6 +46,7 @@ io.on('connection', function(socket) {
     socket.on("leaveLobby", function(lob) {
       if(player.name == lob.player){
         leaveLobby(lob);
+        player.lobby = undefined;
       }
     });
     socket.on("request", function(nm, cb) {
@@ -117,7 +120,7 @@ var leaveLobby = function(lob) {
 var startGame = function(name){
   io.emit("startGame", name);
   findBy(lobbies, "name", name).open = false;
-  findBy(lobbies, "name", name).countdown = 0;
+  findBy(lobbies, "name", name).countdown = -1;
   io.emit("updateLobby", findBy(lobbies, "name", name));
 };
 

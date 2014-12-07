@@ -13,7 +13,7 @@
           l.view = "lobbies";
         }
         else {
-          l.playerName = "name taken";
+          l.playerName = "";
         }
       });
     };
