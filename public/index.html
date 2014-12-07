@@ -24,6 +24,9 @@
           <div class="lobby" ng-repeat="person in player.l.currentLobby.members">
             <div class="u">{{person}}</div>
           </div>
+          <div id="map" class="right">
+            Map: <div class="button fifty inline" ng-click="player.changeMap()">{{player.l.maps[player.l.currentLobby.map]}}</div>
+          </div>
           <div ng-click="player.leaveLobby()" class="button fifty">
             < leave
           </div>

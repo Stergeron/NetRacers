@@ -33,6 +33,13 @@
       this.l.lobbies.push({name: lobname, members: [], open: true});
       this.joinLobby(lobname);
     };
+    this.changeMap = function(){
+      if(this.l.currentLobby.map >= this.l.maps.length-1){
+        this.l.currentLobby.map = -1;
+      }
+      this.l.currentLobby.map++;
+      socket.emit("changeMap", {map: this.l.currentLobby.map, lobby: this.l.currentLobby.name});
+    };
     socket.on("updateLobby", function(lob) {
       if (findBy(l.lobbies, "name", lob.name) !== undefined) {
         l.lobbies[findForIndex(l.lobbies, "name", lob.name)] = lob;
@@ -54,7 +61,8 @@
       view: "signin",
       currentLobby: {},
       lobbies: [],
-      playerName: ""
+      playerName: "",
+      maps: ["Circuit", "Roundabout", "Twisty Turny"]
     };
     var ctx = this;
     this.init = function() {

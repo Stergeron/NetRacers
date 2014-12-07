@@ -46,8 +46,24 @@ input {
   cursor: pointer;
 }
 
+#lobby {
+  width: 50%;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  ms-user-select: none;
+}
+
+#map {
+  font-family: Arial;
+}
+
 .fifty {
   width: 50px;
+}
+
+.inline {
+  display: inline;
 }
 
 .hunna {
