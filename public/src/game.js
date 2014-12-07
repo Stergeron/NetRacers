@@ -27,6 +27,7 @@ var startMatch = function(url) {
   });
 
   var members = [];
+  var socket = io.connect("/match");
 
   Q.component("carControls", {
 
@@ -147,7 +148,6 @@ var startMatch = function(url) {
     stage.viewport.scale = 4;
   });
   var authenticate = function(fn) {
-    var socket = io.connect("/match");
     socket.emit("authenticate", {
       player: url[0],
       match: url[1]
