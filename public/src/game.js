@@ -103,8 +103,6 @@ window.addEventListener("load",function() {
         init: function(p) {
             this._super(p, {
                 asset: "car.png",
-                x: 410,
-                y: 90
             });
             this.add('2d, carControls');
         }
@@ -114,8 +112,6 @@ window.addEventListener("load",function() {
         init: function(d) {
             this._super(d, {
                 asset: "car.png",
-                x: 450,
-                y: 120
             });
             this.add('2d');
         }
@@ -124,7 +120,6 @@ window.addEventListener("load",function() {
     Q.scene("level1", function(stage) {
         var car = stage.insert(new Q.Player());
         var dummy = stage.insert(new Q.Dummy());
-        console.log("Loading musica")
         Q.audio.play('LevelTheme1.mp3', {loop: true});
         Q.stageTMX("TinyCircle.tmx", stage)
         stage.add("viewport").follow(car);
