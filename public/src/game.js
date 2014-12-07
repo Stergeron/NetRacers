@@ -1,4 +1,5 @@
 var startMatch = function(url){
+
   var Q = Quintus({ imagePath: "assets/images/",
   audioPath: "assets/music/",
   dataPath: "assets/maps/",
@@ -120,6 +121,7 @@ var startMatch = function(url){
             this.add('2d');
           }
         });
+        
     Q.scene("level1", function(stage) {
         var socket = io.connect("/match");
         socket.emit("authenticate", {player: url[0], match: url[1]}, function(accept){
