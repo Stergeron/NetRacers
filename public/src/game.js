@@ -132,5 +132,11 @@ window.addEventListener("load",function() {
     Q.loadTMX(["car.png", "car.json", "TinyCircle.tmx", "LevelTheme1.mp3"], function() {
         Q.compileSheets("car.png","car.json");
         Q.stageScene("level1");
+    }, 
+    {
+        progressCallback: function(loaded,total) {
+        var element = document.getElementById("loading_progress");
+        element.style.width = Math.floor(loaded/total*100) + "%";
+        }
     });
 });
