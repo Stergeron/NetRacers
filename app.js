@@ -111,6 +111,9 @@ var match = io
         }
       }
     });
+    socket.on("keychange", function(k){
+      match.emit("keychange", k);
+    });
   });
 
 setInterval(function() {

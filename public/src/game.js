@@ -28,6 +28,7 @@ var startMatch = function(url) {
 
   var members = [];
   var socket = io.connect("/match");
+  var myself = url[0];
 
   Q.component("carControls", {
 
@@ -167,8 +168,8 @@ var startMatch = function(url) {
               };
             }
             socket.on("keychange", function(k) {
-              if (k.match == match.name) {
-
+              if (k.match == url[1]) {
+                findBy(members, "player", k.player)[k.key] = k.bool;
               }
             });
           }
@@ -184,27 +185,38 @@ var startMatch = function(url) {
     });
   });
   window.addEventListener('keydown', function(e) {
-    switch (e.keyCode) {
-      case 38:
-        break;
-      case 40:
-        break;
-      case 37:
-        break;
-      case 39:
-        break;
-    }
+    translateSend(e.keyCode, true);
   }, false);
   window.addEventListener('keyup', function(e) {
-    switch (e.keyCode) {
+    translateSend(e.keyCode, false);
+  }, false);
+
+  var translateSend = function(code, bool) {
+    var trns = "";
+    switch (code) {
       case 38:
+        trns = "up";
         break;
       case 40:
+        trns = "down";
         break;
       case 37:
+        trns = "left";
         break;
       case 39:
+        trns = "right";
         break;
     }
-  }, false);
+    if(trns !== ""){
+      socket.emit("keychange", {player: myself, key: trns, bool: bool, match: url[1]});
+    }
+  };
+
+  var findBy = function(arr, identifier, name) {
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i][identifier] == name) {
+        return arr[i];
+      }
+    }
+  };
 };
