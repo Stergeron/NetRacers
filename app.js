@@ -58,7 +58,7 @@ io.on('connection', function(socket) {
     socket.on("createLobby", function(nm) {
       if(nm == player.name){
         var lobbyname = nm + "'s Lobby";
-        if (findBy(lobbies, "name", lobbyname) === undefined) {
+        if (findBy(lobbies, "name", lobbyname) === undefined && lobbies.length <= 20) {
             lobbies.push({
               name: lobbyname,
               members: [],
