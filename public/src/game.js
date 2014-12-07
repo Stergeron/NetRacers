@@ -25,8 +25,8 @@ window.addEventListener("load",function() {
         added: function() {
             var p = this.entity.p;
 
-            if(!p.stepDistance) { p.stepDistance = 32; }
-            if(!p.stepDelay) { p.stepDelay = 0.2; }
+            if(!p.stepDistance) { p.stepDistance = 16; }
+            if(!p.stepDelay) { p.stepDelay = 0.1; }
 
             p.stepWait = 0;
             this.entity.on("step",this,"step");
@@ -103,7 +103,7 @@ window.addEventListener("load",function() {
         init: function(p) {
             this._super(p, {
                 asset: "car.png",
-                scale: 1,
+                scale: .2,
                 collisionMask: Q.SPRITE_FRIENDLY
             });
             this.add('2d, carControls');
@@ -127,7 +127,7 @@ window.addEventListener("load",function() {
         //var car = stage.insert(new Q.Player());
         //var dummy = stage.insert(new Q.Dummy());
         stage.add("viewport").follow(Q("Player").first());
-        stage.viewport.scale = 1;
+        stage.viewport.scale = 8;
     });
 
     Q.loadTMX(["car.png", "car.json", "TinyCircle2.tmx", "LevelTheme1.mp3"], function() {
