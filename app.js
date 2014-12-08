@@ -41,11 +41,11 @@ io.on('connection', function(socket) {
         io.emit("updateLobby", findBy(lobbies, "name", us.lob));
       }
     });
-    socket.on("changeMap", function(m) {
+    /*socket.on("changeMap", function(m) {
       var lob = findBy(lobbies, "name", m.lobby);
       lob.map = m.map;
       io.emit("updateLobby", lob);
-    });
+    });*/
     socket.on("leaveLobby", function(lob) {
       if (player.name == lob.player) {
         leaveLobby(lob);

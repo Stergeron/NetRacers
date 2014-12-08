@@ -45,13 +45,13 @@
         this.joinLobby(lobname);
       }
     };
-    this.changeMap = function(){
+    /*this.changeMap = function(){
       if(this.l.currentLobby.map >= this.l.maps.length-1){
         this.l.currentLobby.map = -1;
       }
       this.l.currentLobby.map++;
       socket.emit("changeMap", {map: this.l.currentLobby.map, lobby: this.l.currentLobby.name});
-    };
+    };*/
     this.startGame = function(){
       socket.emit("startGame", {name: this.l.currentLobby.name, player: this.l.playerName});
     };
