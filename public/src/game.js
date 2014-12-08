@@ -136,10 +136,8 @@ var startMatch = function(url) {
       loop: true
     });
     Q.stageTMX("TinyCircle.tmx", stage);
-    console.log("WATAFAK");
-    console.log(members[0]);
+    console.log(members);
     for (var i = 0; i < members.length; i++) {
-      console.log(myindex);
       var car = stage.insert(new Q.Car());
       if (i == myindex) {   //this isnt working
         console.log("ya");
