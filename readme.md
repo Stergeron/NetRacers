@@ -7,6 +7,6 @@ We are Team Stergeron, four high school students with a passion for coding and a
 Someone take screenshots so we can use them.
 
 ##APIs Used
-*Socket IO
-*NodeJS
-*Quintus
+* Socket IO
+* NodeJS
+* Quintus
