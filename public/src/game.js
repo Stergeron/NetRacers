@@ -138,19 +138,26 @@ var startMatch = function(url) {
     Q.stageTMX("TinyCircle.tmx", stage);
     var cars = generateCars();
     console.log(cars);
-    for(var i=0; i<cars.length; i++){
+    for (var i = 0; i < cars.length; i++) {
       stage.insert(cars[i]);
-      if(i == myindex){
-        stage.add("viewport").follow(cars[i]);
+      if (i == myindex) {
+        stage.add("viewport").follow(new Q.Car());
         stage.viewport.scale = 4;
       }
     }
+
+    stage.add("viewport").follow(new Q.Car());
+    stage.viewport.scale = 4;
   });
 
-  var generateCars = function(){
+  var generateCars = function() {
     var cars = [];
-    for(var i=0; i<members.length; i++){
-      cars.push(new Q.Car({memberIndex: i})); //PROBLEM SPOT WOLL PLS
+    for (var i = 0; i < members.length; i++) {
+      var car = new Q.Car({
+        memberIndex: i
+      });
+      console.log(car);
+      cars.push(car); //PROBLEM SPOT WOLL PLS
     }
     return cars;
   };
@@ -168,7 +175,7 @@ var startMatch = function(url) {
             fn(match.map);
             members = match.members;
             for (var i = 0; i < members.length; i++) {
-              if(members[i] == myself){
+              if (members[i] == myself) {
                 myindex = i;
               }
               members[i] = {
