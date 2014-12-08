@@ -27,6 +27,7 @@ var startMatch = function(url) {
   });
 
   var members = [];
+  var stag = null;
   var socket = io.connect("/match");
   var myself = url[0];
   var myindex = 0;
@@ -136,13 +137,7 @@ var startMatch = function(url) {
       loop: true
     });
     Q.stageTMX("TinyCircle.tmx", stage);
-    for (var i = 0; i < members.length; i++) {
-      var car = stage.insert(new Q.Car());
-      if (i == myindex) {   //this isnt working
-        stage.add("viewport").follow(car);
-        stage.viewport.scale = 4;
-      }
-    }
+    stag = stage;
   });
 
   var authenticate = function(fn) {
@@ -168,6 +163,13 @@ var startMatch = function(url) {
                 left: false,
                 right: false
               };
+            }
+            for (var i = 0; i < members.length; i++) {
+              var car = stag.insert(new Q.Car());
+              if (i == myindex) {   //this isnt working
+                stag.add("viewport").follow(car);
+                stag.viewport.scale = 4;
+              }
             }
             socket.on("keychange", function(k) {
               if (k.match == url[1]) {
