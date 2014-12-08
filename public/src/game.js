@@ -141,7 +141,9 @@ var startMatch = function(url) {
     for (var i = 0; i < cars.length; i++) {
       stage.insert(cars[i]);
       if (i == myindex) {
-        stage.add("viewport").follow(new Q.Car());
+        var car = new Q.Car();
+        stage.insert(car);
+        stage.add("viewport").follow(car);
         stage.viewport.scale = 4;
       }
     }
