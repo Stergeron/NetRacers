@@ -102,14 +102,14 @@ var match = io
       {
         var cMatch = findBy(matches, "name", auth.match);
         fn("yes");
-        if (auth.player == cMatch.members[cMatch.members.length - 1]) {
+        //if (auth.player == cMatch.members[cMatch.members.length - 1]) {
           match.emit("begin", {
             name: auth.match,
             map: cMatch.map,
             members: cMatch.members
           });
-          console.log("beginning because of " + auth.player);
-        }
+          //console.log("beginning because of " + auth.player);
+        //}
       }
     });
     socket.on("keychange", function(k){
