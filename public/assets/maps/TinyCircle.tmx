@@ -7,7 +7,7 @@
   <image source="../images/car.png" width="32" height="32"/>
   <tile id="0">
    <properties>
-    <property name="Class" value="Car"/>
+    <property name="Class" value="Player"/>
    </properties>
   </tile>
  </tileset>
@@ -1033,5 +1033,7 @@
    <tile gid="14"/>
   </data>
  </layer>
- <objectgroup name="Cars"/>
+ <objectgroup name="Cars">
+  <object gid="145" x="870" y="242"/>
+ </objectgroup>
 </map>
