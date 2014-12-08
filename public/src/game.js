@@ -137,8 +137,8 @@ var startMatch = function(url) {
     });
     Q.stageTMX("TinyCircle.tmx", stage);
     for (var i = 0; i < members.length; i++) {
-      var car = stage.insert(new Q.Car());
-      if (i == myindex) {   //this isnt working
+      var car = stage.insert(new Q.Car({memberIndex: i}));
+      if (i == myindex) {
         stage.add("viewport").follow(car);
         stage.viewport.scale = 4;
       }
