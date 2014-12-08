@@ -136,33 +136,14 @@ var startMatch = function(url) {
       loop: true
     });
     Q.stageTMX("TinyCircle.tmx", stage);
-    var cars = generateCars();
-    console.log(cars);
-    for (var i = 0; i < cars.length; i++) {
-      stage.insert(cars[i]);
-      if (i == myindex) {
-        var car = new Q.Car();
-        stage.insert(car);
+    for (var i = 0; i < members.length; i++) {
+      var car = stage.insert(new Q.Car());
+      if (i == myindex) {   //this isnt working
         stage.add("viewport").follow(car);
         stage.viewport.scale = 4;
       }
     }
-
-    stage.add("viewport").follow(new Q.Car());
-    stage.viewport.scale = 4;
   });
-
-  var generateCars = function() {
-    var cars = [];
-    for (var i = 0; i < members.length; i++) {
-      var car = new Q.Car({
-        memberIndex: i
-      });
-      console.log(car);
-      cars.push(car); //PROBLEM SPOT WOLL PLS
-    }
-    return cars;
-  };
 
   var authenticate = function(fn) {
     socket.emit("authenticate", {
