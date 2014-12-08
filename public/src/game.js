@@ -137,16 +137,16 @@ var startMatch = function(url) {
     });
     Q.stageTMX("TinyCircle.tmx", stage);
     var cars = generateCars();
-    console.log(cars);
-    for (var i = 0; i < cars.length; i++) {
+    /*for (var i = 0; i < cars.length; i++) {
       stage.insert(cars[i]);
       if (i == myindex) {
         stage.add("viewport").follow(new Q.Car());
         stage.viewport.scale = 4;
       }
-    }
-
-    stage.add("viewport").follow(new Q.Car());
+    }*/
+    var car = new Q.Car();
+    console.log(car.p);
+    stage.add("viewport").follow(car);
     stage.viewport.scale = 4;
   });
 
