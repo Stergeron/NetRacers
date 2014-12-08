@@ -29,6 +29,8 @@ var startMatch = function(url) {
   var members = [];
   var socket = io.connect("/match");
   var myself = url[0];
+  var myindex = 0;
+
   Q.component("carControls", {
 
     added: function() {
@@ -79,15 +81,15 @@ var startMatch = function(url) {
       p.diffX = 0;
       p.diffY = 0;
 
-      if (members[0]['left']) {
+      if (members[p.memberIndex]['left']) {
         p.diffX = -p.stepDistance;
-      } else if (members[0]['right']) {
+      } else if (members[p.memberIndex]['right']) {
         p.diffX = p.stepDistance;
       }
 
-      if (members[0]['up']) {
+      if (members[p.memberIndex]['up']) {
         p.diffY = -p.stepDistance;
-      } else if (members[0]['down']) {
+      } else if (members[p.memberIndex]['down']) {
         p.diffY = p.stepDistance;
       }
 
@@ -114,7 +116,7 @@ var startMatch = function(url) {
     }
   });
 
-  Q.Sprite.extend("Player", { //Create car sprite
+  Q.Sprite.extend("Car", { //Create car sprite
     init: function(p) {
       this._super(p, {
         sheet: "car",
@@ -122,6 +124,7 @@ var startMatch = function(url) {
         scale: 0.5,
         x: 852,
         y: 221,
+        memberIndex: 0,
         collisionMask: Q.SPRITE_DEFAULT | Q.SPRITE_ACTIVE,
       });
       this.add('2d, carControls');
@@ -133,10 +136,25 @@ var startMatch = function(url) {
       loop: true
     });
     Q.stageTMX("TinyCircle.tmx", stage);
-    var car = stage.insert(new Q.Player());
-    stage.add("viewport").follow(car);
-    stage.viewport.scale = 4;
+    var cars = generateCars();
+    console.log(cars);
+    for(var i=0; i<cars.length; i++){
+      stage.insert(cars[i]);
+      if(i == myindex){
+        stage.add("viewport").follow(cars[i]);
+        stage.viewport.scale = 4;
+      }
+    }
   });
+
+  var generateCars = function(){
+    var cars = [];
+    for(var i=0; i<members.length; i++){
+      cars.push(new Q.Car({memberIndex: i})); //PROBLEM SPOT WOLL PLS
+    }
+    return cars;
+  };
+
   var authenticate = function(fn) {
     socket.emit("authenticate", {
       player: url[0],
@@ -150,6 +168,9 @@ var startMatch = function(url) {
             fn(match.map);
             members = match.members;
             for (var i = 0; i < members.length; i++) {
+              if(members[i] == myself){
+                myindex = i;
+              }
               members[i] = {
                 player: members[i],
                 up: false,
