@@ -27,6 +27,7 @@ var startMatch = function(url) {
   var socket = io.connect("/match");
   var myself = url[0];
   var myindex;
+  var countDown = 1000000;
 
   Q.component("carControls", {
 
@@ -57,6 +58,10 @@ var startMatch = function(url) {
     },
 
     step: function(dt) {
+      countDown--
+      if(countDown < 0) {
+        finishGame();
+      }
       var p = this.entity.p,
         moved = false;
       p.stepWait -= dt;
