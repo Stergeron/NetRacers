@@ -1,7 +1,7 @@
 #Stergeron Game
 
 ##Description
-We are Team Stergeron, four high school students with a passion for coding and a love for the free internet. We decided to create an interactive racing game to inform and educate about Net Neutrality.
+We are Team Stergeron, four high school students with a passion for coding and a love for the free internet. We based our project around the theme of "HTML5 games that are educational and learning oriented. (multiplayer preferred)". We decided to create an interactive racing game to inform and educate about Net Neutrality. We feel strongly that the internet is not something that should be throttled and controlled by ISPs.
 
 ##Screenshots
 ![IDE](https://github.com/Stergeron/NetRacers/blob/master/public/assets/images/idescreen.png)
