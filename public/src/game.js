@@ -1,5 +1,5 @@
 var startMatch = function(url) {
-
+  document.getElementById("w").style.display = "none";
   var Q = Quintus({
       imagePath: "assets/images/",
       audioPath: "assets/music/",
@@ -180,10 +180,13 @@ var startMatch = function(url) {
     });
   };
 
+  document.getElementById("quintus").style.display = "none";
   Q.loadTMX(["car.png", "car.json", "TinyCircle.tmx", "LevelTheme1.mp3"], function() {
     Q.compileSheets("car.png", "car.json");
     authenticate(function(map) {
       Q.stageScene(map.toString());
+      document.getElementById("loading").style.display = "none";
+      document.getElementById("quintus").style.display = "block";
     });
   });
   window.addEventListener('keydown', function(e) {
@@ -217,6 +220,11 @@ var startMatch = function(url) {
         match: url[1]
       });
     }
+  };
+
+  var finishGame = function(){ //CALL THIS WHEN UR DONE!!
+    document.getElementById("quintus").style.display = "none";
+    document.getElementById("w").style.display = "block";
   };
 
   var findBy = function(arr, identifier, name) {

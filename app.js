@@ -49,7 +49,6 @@ io.on('connection', function(socket) {
     socket.on("leaveLobby", function(lob) {
       if (player.name == lob.player) {
         leaveLobby(lob);
-        player.lobby = undefined;
       }
     });
     socket.on("request", function(nm, cb) {
@@ -73,6 +72,16 @@ io.on('connection', function(socket) {
     socket.on("startGame", function(l) {
       if (player.name == l.player) {
         startGame(l.name);
+      }
+    });
+    socket.on("leaveGame", function() {
+      if (player.name !== undefined) {
+        players.splice(findForIndex(players, "name", player.name), 1);
+        if (player.lobby !== undefined) {
+          if (findBy(matches, "name", player.lobby) !== undefined) {
+            matches.splice(findForIndex(matches, "name", player.lobby), 1);
+          }
+        }
       }
     });
     socket.on("packet", function(dat) {
@@ -102,17 +111,17 @@ var match = io
       {
         var cMatch = findBy(matches, "name", auth.match);
         fn("yes");
-        if (auth.player == cMatch.members[cMatch.members.length - 1]) {
+        cMatch.joined++;
+        if (cMatch.joined == cMatch.members.length) {
           match.emit("begin", {
             name: auth.match,
             map: cMatch.map,
             members: cMatch.members
           });
-          console.log("beginning because of " + auth.player);
         }
       }
     });
-    socket.on("keychange", function(k){
+    socket.on("keychange", function(k) {
       match.emit("keychange", k);
     });
   });
@@ -134,13 +143,15 @@ setInterval(function() {
 
 var leaveLobby = function(lob) {
   var index = findForIndex(lobbies, "name", lob.name);
-  lobbies[index].members.splice(lobbies[index].members.indexOf(lob.player), 1);
-  if (!lobbies[index].open) lobbies[index].open = true;
-  if (lobbies[index].members.length < 1) {
-    lobbies.splice(index, 1);
-    io.emit("removeLobby", lob.name);
-  } else {
-    io.emit("updateLobby", findBy(lobbies, "name", lob.name));
+  if (index !== undefined) {
+    lobbies[index].members.splice(lobbies[index].members.indexOf(lob.player), 1);
+    if (!lobbies[index].open) lobbies[index].open = true;
+    if (lobbies[index].members.length < 1) {
+      lobbies.splice(index, 1);
+      io.emit("removeLobby", lob.name);
+    } else {
+      io.emit("updateLobby", findBy(lobbies, "name", lob.name));
+    }
   }
 };
 
@@ -151,7 +162,8 @@ var startGame = function(name) {
   matches.push(JSON.parse(JSON.stringify({
     name: name,
     members: lob.members,
-    map: lob.map
+    map: lob.map,
+    joined: 0
   })));
   lob.countdown = -1;
   io.emit("updateLobby", findBy(lobbies, "name", name));

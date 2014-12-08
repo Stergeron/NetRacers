@@ -36,6 +36,9 @@
       socket.emit("leaveLobby", {name: this.l.currentLobby.name, player: this.l.playerName});
       this.l.view = "lobbies";
     };
+    this.leaveGame = function(){
+      socket.emit("leaveGame", {});
+    };
     this.createLobby = function(){
       var lobname = this.l.playerName + "'s Lobby";
       var ok = false;
@@ -54,12 +57,6 @@
     };*/
     this.startGame = function(){
       socket.emit("startGame", {name: this.l.currentLobby.name, player: this.l.playerName});
-    };
-    this.keydown = function(){
-      socket.emit("packet", {game: this.l.currentLobby.name, member: this.l.playerName, pressed: true});
-    };
-    this.keyup = function(){
-      socket.emit("packet", {game: this.l.currentLobby.name, member: this.l.playerName, pressed: false});
     };
     socket.on("packet", function(dat){
       if(dat.game == l.currentLobby.name){
@@ -96,6 +93,7 @@
       currentGame: [],
       lobbies: [],
       playerName: "",
+      carImages: ["VerizonCar.png", "ComcastCar.png", "CoxCar.png", "TWCCar.png"],
       maps: ["Circuit", "Roundabout", "Twisty Turny"]
     };
     var ctx = this;
