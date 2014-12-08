@@ -36,6 +36,9 @@
       socket.emit("leaveLobby", {name: this.l.currentLobby.name, player: this.l.playerName});
       this.l.view = "lobbies";
     };
+    this.leaveGame = function(){
+      socket.emit("leaveGame", {});
+    };
     this.createLobby = function(){
       var lobname = this.l.playerName + "'s Lobby";
       var ok = false;

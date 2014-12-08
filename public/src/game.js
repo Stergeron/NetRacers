@@ -220,6 +220,7 @@ var startMatch = function(url) {
   };
 
   var finishGame = function(){ //CALL THIS WHEN UR DONE!!
+    document.getElementById("quintus").style.display = "none";
     document.getElementById("w").style.display = "block";
   };
 

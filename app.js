@@ -49,7 +49,6 @@ io.on('connection', function(socket) {
     socket.on("leaveLobby", function(lob) {
       if (player.name == lob.player) {
         leaveLobby(lob);
-        player.lobby = undefined;
       }
     });
     socket.on("request", function(nm, cb) {
@@ -73,6 +72,16 @@ io.on('connection', function(socket) {
     socket.on("startGame", function(l) {
       if (player.name == l.player) {
         startGame(l.name);
+      }
+    });
+    socket.on("leaveGame", function(){
+      if (player.name !== undefined) {
+        players.splice(findForIndex(players, "name", player.name), 1);
+        if(player.lobby !== undefined){
+          if(findBy(matches, "name", player.lobby) !== undefined){
+            matches.splice(findForIndex(matches, "name", player.lobby), 1);
+          }
+        }
       }
     });
     socket.on("packet", function(dat) {
