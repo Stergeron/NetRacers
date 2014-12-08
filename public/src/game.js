@@ -120,23 +120,13 @@ var startMatch = function(url) {
         sheet: "car",
         sprite: "car",
         scale: 0.5,
+        x: 852,
+        y: 221,
         collisionMask: Q.SPRITE_DEFAULT | Q.SPRITE_ACTIVE,
       });
       this.add('2d, carControls');
     }
   });
-
-  Q.Sprite.extend("Dummy", {
-    init: function(d) {
-      this._super(d, {
-        sheet: "car",
-        sprite: "car",
-        scale: 0.5
-      });
-      this.add('2d');
-    }
-  });
-
 
   Q.scene("0", function(stage) {
     Q.audio.play('LevelTheme1.mp3', {
@@ -155,6 +145,7 @@ var startMatch = function(url) {
       if (accept == "yes") {
         console.log("waiting");
         socket.on("begin", function(match) {
+          console.log("beginning");
           if (url[1] == match.name) {
             fn(match.map);
             members = match.members;
