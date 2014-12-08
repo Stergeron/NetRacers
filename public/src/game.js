@@ -1,5 +1,5 @@
 var startMatch = function(url) {
-
+  document.getElementById("w").style.display = "none";
   var Q = Quintus({
       imagePath: "assets/images/",
       audioPath: "assets/music/",
@@ -217,6 +217,10 @@ var startMatch = function(url) {
         match: url[1]
       });
     }
+  };
+
+  var finishGame = function(){ //CALL THIS WHEN UR DONE!!
+    document.getElementById("w").style.display = "block";
   };
 
   var findBy = function(arr, identifier, name) {

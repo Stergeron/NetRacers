@@ -59,7 +59,19 @@
           </div>
         </div>
         <div id="match" ng-show="player.l.view == 'match'">
-          <!--Dianne, put the infos in this div-->
+          <div id="w">
+            Whether you won or lost, the race completed. But in real life, the consequences won't be limited to a race on your screen. Every ISP in your area will charge more, racing toward top speeds and top prices.<br><br>
+            <b>What can I do?</b><br>
+            <a href="https://consumercomplaints.fcc.gov/hc/en-us">Submit an informal complaint</a>
+            <br>
+            <a href="http://arstechnica.com/tech-policy/2010/12/got-a-net-neutrality-complaint-heres-what-to-do/">Submit a formal complaint</a>
+            <br>
+            <a href="http://www.savetheinternet.com/sti-home">Spread the word</a>
+            <br>
+            <a href="www.openinter.net">More about net neutrality</a>
+            <br>
+            <a href="#" ng-click="player.leaveLobby(); player.main()">Main Menu</a>
+            </div>
         </div>
         <div id="credits" ng-show="player.l.view == 'credits'">
           <div class="linkContainer">
