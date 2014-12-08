@@ -102,14 +102,14 @@ var match = io
       {
         var cMatch = findBy(matches, "name", auth.match);
         fn("yes");
-        //if (auth.player == cMatch.members[cMatch.members.length - 1]) {
+        cMatch.joined++;
+        if (cMatch.joined == cMatch.members.length) {
           match.emit("begin", {
             name: auth.match,
             map: cMatch.map,
             members: cMatch.members
           });
-          //console.log("beginning because of " + auth.player);
-        //}
+        }
       }
     });
     socket.on("keychange", function(k){
@@ -151,7 +151,8 @@ var startGame = function(name) {
   matches.push(JSON.parse(JSON.stringify({
     name: name,
     members: lob.members,
-    map: lob.map
+    map: lob.map,
+    joined: 0
   })));
   lob.countdown = -1;
   io.emit("updateLobby", findBy(lobbies, "name", name));
