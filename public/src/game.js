@@ -27,10 +27,9 @@ var startMatch = function(url) {
   });
 
   var members = [];
-  var stag = null;
   var socket = io.connect("/match");
   var myself = url[0];
-  var myindex = 0;
+  var myindex;
 
   Q.component("carControls", {
 
@@ -137,7 +136,13 @@ var startMatch = function(url) {
       loop: true
     });
     Q.stageTMX("TinyCircle.tmx", stage);
-    stag = stage;
+    for (var i = 0; i < members.length; i++) {
+      var car = stage.insert(new Q.Car());
+      if (i == myindex) {   //this isnt working
+        stage.add("viewport").follow(car);
+        stage.viewport.scale = 4;
+      }
+    }
   });
 
   var authenticate = function(fn) {
@@ -150,28 +155,20 @@ var startMatch = function(url) {
         socket.on("begin", function(match) {
           console.log("beginning");
           if (url[1] == match.name) {
-            fn(match.map);
-            members = match.members;
-            console.log(members);
-            for (var i = 0; i < members.length; i++) {
-              if (members[i] == myself) {
+            var mymems = match.members;
+            for (var i = 0; i < mymems.length; i++) {
+              if (mymems[i] == myself) {
                 myindex = i;
               }
               members[i] = {
-                player: members[i],
+                player: mymems[i],
                 up: false,
                 down: false,
                 left: false,
                 right: false
               };
             }
-            for (var i = 0; i < members.length; i++) {
-              var car = stag.insert(new Q.Car());
-              if (i == myindex) {   //this isnt working
-                stag.add("viewport").follow(car);
-                stag.viewport.scale = 4;
-              }
-            }
+            fn(match.map);
             socket.on("keychange", function(k) {
               if (k.match == url[1]) {
                 findBy(members, "player", k.player)[k.key] = k.bool;
