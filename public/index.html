@@ -45,7 +45,7 @@
         </div>
         <div id="lobby" ng-show="player.l.view == 'lobby'">
           <div class="lobby" ng-repeat="person in player.l.currentLobby.members">
-            <div class="u">{{person}}</div>
+            <div class="u">{{person}}</div><img class="prev" ng-src="/assets/images/cars/{{player.l.carImages[player.l.currentLobby.members.indexOf(person)]}}">
           </div>
           <div class="right">
             <!--<div id="map">

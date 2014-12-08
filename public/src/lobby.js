@@ -93,6 +93,7 @@
       currentGame: [],
       lobbies: [],
       playerName: "",
+      carImages: ["VerizonCar.png", "ComcastCar.png", "CoxCar.png", "TWCCar.png"],
       maps: ["Circuit", "Roundabout", "Twisty Turny"]
     };
     var ctx = this;
