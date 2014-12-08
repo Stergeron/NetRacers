@@ -1,0 +1,9 @@
+{
+   "comcast":{"sx":0,"sy":0,"cols":1,"spacingX":2,"spacingY":2,"tilew":16,"tileh":28,"frames":1},
+
+   "cox":{"sx":30,"sy":0,"cols":1,"spacingX":2,"spacingY":2,"tilew":16,"tileh":28,"frames":1},
+
+   "twc":{"sx":60,"sy":0,"cols":1,"spacingX":2,"spacingY":2,"tilew":16,"tileh":28,"frames":1},
+
+   "verizon":{"sx":90,"sy":0,"cols":1,"spacingX":2,"spacingY":2,"tilew":16,"tileh":28,"frames":1}
+}
