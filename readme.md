@@ -5,6 +5,7 @@ We are Team Stergeron, four high school students with a passion for coding and a
 
 ##Screenshots
 ![IDE](https://github.com/Stergeron/NetRacers/blob/master/public/assets/images/idescreen.png)
+![title](https://github.com/Stergeron/NetRacers/blob/master/public/assets/images/titleshot.png)
 
 ##APIs Used
 * Socket IO
