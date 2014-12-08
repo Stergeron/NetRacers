@@ -102,12 +102,13 @@ var match = io
       {
         var cMatch = findBy(matches, "name", auth.match);
         fn("yes");
-        if (cMatch.members.indexOf(auth.player) == cMatch.members.length - 1) {
+        if (auth.player == cMatch.members[cMatch.members.length - 1]) {
           match.emit("begin", {
             name: auth.match,
             map: cMatch.map,
             members: cMatch.members
           });
+          console.log("beginning because of " + auth.player);
         }
       }
     });
