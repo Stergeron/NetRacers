@@ -152,6 +152,7 @@ var startMatch = function(url) {
           if (url[1] == match.name) {
             fn(match.map);
             members = match.members;
+            console.log(members);
             for (var i = 0; i < members.length; i++) {
               if (members[i] == myself) {
                 myindex = i;
