@@ -6,24 +6,21 @@ var startMatch = function(url) {
       dataPath: "assets/maps/",
       audioSupported: ["mp3"]
     })
-    .include("Sprites, Scenes, Input, 2D, Anim, Touch, UI, Audio, TMX")
+    .include("Sprites, Scenes, Input, 2D, Anim,  UI, Audio, TMX")
     .setup({
       maximize: true
     })
     .enableSound()
-    .controls(true).touch();
+    .controls();
 
   Q.gravityY = 0;
   Q.gravityX = 0;
 
   Q.input.touchControls({
-    controls: [
-      ['left', '<'],
-      ['right', '>'],
-      ["up", "^"],
-      ["down", "V"],
-      ['fire', 'O']
-    ]
+    controls: [ ['left', '<'],
+                ['right', '>'],
+                ["up", "^"],
+                ["down", "V"]]
   });
 
   var members = [];
