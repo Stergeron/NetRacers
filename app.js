@@ -74,11 +74,11 @@ io.on('connection', function(socket) {
         startGame(l.name);
       }
     });
-    socket.on("leaveGame", function(){
+    socket.on("leaveGame", function() {
       if (player.name !== undefined) {
         players.splice(findForIndex(players, "name", player.name), 1);
-        if(player.lobby !== undefined){
-          if(findBy(matches, "name", player.lobby) !== undefined){
+        if (player.lobby !== undefined) {
+          if (findBy(matches, "name", player.lobby) !== undefined) {
             matches.splice(findForIndex(matches, "name", player.lobby), 1);
           }
         }
@@ -121,7 +121,7 @@ var match = io
         }
       }
     });
-    socket.on("keychange", function(k){
+    socket.on("keychange", function(k) {
       match.emit("keychange", k);
     });
   });
@@ -143,13 +143,15 @@ setInterval(function() {
 
 var leaveLobby = function(lob) {
   var index = findForIndex(lobbies, "name", lob.name);
-  lobbies[index].members.splice(lobbies[index].members.indexOf(lob.player), 1);
-  if (!lobbies[index].open) lobbies[index].open = true;
-  if (lobbies[index].members.length < 1) {
-    lobbies.splice(index, 1);
-    io.emit("removeLobby", lob.name);
-  } else {
-    io.emit("updateLobby", findBy(lobbies, "name", lob.name));
+  if (index !== undefined) {
+    lobbies[index].members.splice(lobbies[index].members.indexOf(lob.player), 1);
+    if (!lobbies[index].open) lobbies[index].open = true;
+    if (lobbies[index].members.length < 1) {
+      lobbies.splice(index, 1);
+      io.emit("removeLobby", lob.name);
+    } else {
+      io.emit("updateLobby", findBy(lobbies, "name", lob.name));
+    }
   }
 };
 
